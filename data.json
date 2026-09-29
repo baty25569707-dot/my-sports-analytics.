@@ -1,5 +1,5 @@
 {
-    "updated_at": "2026-09-29 18:39",
+    "updated_at": "2026-09-29 19:47",
     "categories": {
         "baseball": {
             "name": "棒球",
@@ -18,7 +18,17 @@
                     "info": "山本由伸 VS Gerrit Cole",
                     "h2h": "道奇近 10 場對戰 6 勝 4 敗",
                     "aiTrend": "主推：道奇主勝 | 總分 8.5 大",
-                    "confidence": 88
+                    "confidence": 88,
+                    "detail": {
+                        "venue": "道奇體育場 (Dodger Stadium)",
+                        "weather": "晴朗乾燥",
+                        "weatherIcon": "fa-sun",
+                        "temp": "22°C",
+                        "wind": "微風 8 km/h (吹向外野)",
+                        "recentForm": "道奇主場近 5 場 4 勝 1 敗；洋基客場 2 勝 3 敗",
+                        "injuries": "道奇：無重大傷兵；洋基：牛棚主力投手掛傷號",
+                        "aiReason": "山本由伸近 3 場先發防禦率僅 1.80，搭配道奇主場打擊發揮穩定；且洋基牛棚近期過勞，看好道奇順利拿下主勝。"
+                    }
                 },
                 {
                     "league": "CPBL",
@@ -28,7 +38,17 @@
                     "info": "德保拉 VS 古林睿漾",
                     "h2h": "本季交手 中信 5 勝 3 敗",
                     "aiTrend": "主推：中信兄弟讓分 (-1.5)",
-                    "confidence": 82
+                    "confidence": 82,
+                    "detail": {
+                        "venue": "台中洲際棒球場",
+                        "weather": "多雲",
+                        "weatherIcon": "fa-cloud-sun",
+                        "temp": "28°C",
+                        "wind": "靜風 3 km/h",
+                        "recentForm": "中信兄弟 3 連勝中；統一獅近 5 場 2 勝 3 敗",
+                        "injuries": "雙方主力打線均正常出賽",
+                        "aiReason": "德保拉對戰統一獅歷史防禦率偏低，且中信兄弟主場打擊火力凶猛，看好過盤讓分。"
+                    }
                 }
             ]
         },
@@ -48,17 +68,17 @@
                     "info": "Curry 近 3 場平均 31.2 分",
                     "h2h": "勇士近 5 次主場迎戰湖人取得 4 勝",
                     "aiTrend": "主推：勇士 -3.5 | 總分 224.5 大",
-                    "confidence": 85
-                },
-                {
-                    "league": "TPBL",
-                    "time": "19:00",
-                    "homeTeam": "新北國王",
-                    "awayTeam": "高雄全家海神",
-                    "info": "林書豪傷癒復出",
-                    "h2h": "雙方近 3 次交手均打出大分",
-                    "aiTrend": "主推：新北國王主勝",
-                    "confidence": 80
+                    "confidence": 85,
+                    "detail": {
+                        "venue": "大通中心 (Chase Center)",
+                        "weather": "室內空調體育館",
+                        "weatherIcon": "fa-building",
+                        "temp": "20°C",
+                        "wind": "無風",
+                        "recentForm": "勇士主場 6 連勝；湖人客場 2 連敗",
+                        "injuries": "湖人：濃眉哥 (Davis) 腳踝出賽成疑",
+                        "aiReason": "勇士近期主場三分命中率高達 41%，湖人若受傷兵影響禁區防守，節奏將被勇士帶走。"
+                    }
                 }
             ]
         },
@@ -67,10 +87,7 @@
             "leagues": [
                 "歐冠",
                 "英超",
-                "西甲",
-                "德甲",
-                "意甲",
-                "法甲"
+                "西甲"
             ],
             "matches": [
                 {
@@ -78,18 +95,27 @@
                     "time": "03:00",
                     "homeTeam": "皇家馬德里",
                     "awayTeam": "曼城",
-                    "info": "歐冠淘汰賽",
+                    "info": "歐冠淘汰賽焦點戰",
                     "h2h": "近 4 次交手各 2 勝平分秋色",
                     "aiTrend": "主推：雙方均有進球 (BTTS) | 2.5 大",
-                    "confidence": 90
+                    "confidence": 90,
+                    "detail": {
+                        "venue": "伯納烏球場 (Santiago Bernabéu)",
+                        "weather": "陰天局部陣雨",
+                        "weatherIcon": "fa-cloud-rain",
+                        "temp": "15°C",
+                        "wind": "陣風 12 km/h",
+                        "recentForm": "皇馬各項賽事 8 連不敗；曼城近 5 場全勝",
+                        "injuries": "皇馬：主力後衛累計黃牌停賽",
+                        "aiReason": "兩隊均具備頂級進攻火力，且皇馬後防有缺口，開出大分與雙進機率極高。"
+                    }
                 }
             ]
         },
         "tennis": {
             "name": "網球",
             "leagues": [
-                "ATP 大滿貫",
-                "WTA 巡迴賽"
+                "ATP 大滿貫"
             ],
             "matches": [
                 {
@@ -100,7 +126,17 @@
                     "info": "硬地賽 決賽",
                     "h2h": "對戰紀錄 Alcaraz 5 勝 4 敗",
                     "aiTrend": "主推：總局數 39.5 大",
-                    "confidence": 86
+                    "confidence": 86,
+                    "detail": {
+                        "venue": "中央球場 (Center Court)",
+                        "weather": "晴朗",
+                        "weatherIcon": "fa-sun",
+                        "temp": "25°C",
+                        "wind": "微風 6 km/h",
+                        "recentForm": "雙方均以一盤未失挺進決賽",
+                        "injuries": "雙方狀態良好無傷病",
+                        "aiReason": "頂尖對決實力極為接近，歷史交手多次打滿盤數，極可能上演大分拉鋸戰。"
+                    }
                 }
             ]
         }
