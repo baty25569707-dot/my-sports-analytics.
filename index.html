@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SportX 量化博弈智彩數據研究院</title>
+    <title>SportX 每日尖端量化博弈與賽事日報</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -18,30 +18,35 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Header -->
+    <!-- Header / 頂部日報導覽列 -->
     <header class="bg-[#0f1c3f] border-b border-slate-800 py-4 px-6 sticky top-0 z-40 shadow-xl">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
             <div class="flex items-center gap-3">
-                <i class="fa-solid fa-atom text-[#38bdf8] text-2xl animate-pulse"></i>
-                <h1 class="text-xl font-bold tracking-wide bg-gradient-to-r from-white via-sky-200 to-[#38bdf8] bg-clip-text text-transparent">
-                    SportX 尖端量化博弈與賽事決策引擎
-                </h1>
+                <i class="fa-solid fa-newspaper text-[#38bdf8] text-2xl"></i>
+                <div>
+                    <h1 class="text-lg font-bold tracking-wide bg-gradient-to-r from-white via-sky-200 to-[#38bdf8] bg-clip-text text-transparent">
+                        SportX 每日賽事量化日報 (Daily Report)
+                    </h1>
+                    <div id="daily-date" class="text-xs text-sky-400 font-mono mt-0.5"><i class="fa-regular fa-calendar-days mr-1"></i>2026-09-30 賽事專欄</div>
+                </div>
             </div>
             
             <div class="flex flex-wrap items-center gap-3 text-xs">
+                <!-- 總本金與單位計算器 -->
                 <div class="bg-[#050b14]/90 border border-sky-500/30 px-3 py-1.5 rounded-xl flex items-center gap-2">
-                    <span class="text-slate-400 font-semibold"><i class="fa-solid fa-vault text-amber-400 mr-1"></i>演算法總本金:</span>
+                    <span class="text-slate-400 font-semibold"><i class="fa-solid fa-vault text-amber-400 mr-1"></i>總本金:</span>
                     <span class="text-sky-300 font-bold">NT$</span>
                     <input type="number" id="user-bankroll" value="10000" step="1000" onchange="updateBankroll()" class="w-20 bg-slate-900 text-white font-bold font-mono px-2 py-0.5 rounded border border-slate-700 focus:outline-none focus:border-sky-400 text-center">
-                    <span class="text-slate-400 text-[11px]">(Kelly Unit = <span id="unit-val" class="text-amber-300 font-bold">NT$ 300</span>)</span>
+                    <span class="text-slate-400 text-[11px]">(Unit = <span id="unit-val" class="text-amber-300 font-bold">NT$ 300</span>)</span>
                 </div>
 
+                <!-- 5分鐘自動同步倒數 -->
                 <div class="bg-sky-500/10 border border-sky-500/30 text-sky-300 px-3 py-1.5 rounded-xl flex items-center gap-1.5 font-mono">
                     <span class="relative flex h-2 w-2">
                       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                       <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
                     </span>
-                    模型動態刷新: <span id="countdown" class="font-bold text-white">05:00</span>
+                    同步倒數: <span id="countdown" class="font-bold text-white">05:00</span>
                 </div>
             </div>
         </div>
@@ -49,16 +54,38 @@
 
     <!-- Main Container -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 space-y-6">
+
+        <!-- 每日日報導言橫幅 (模仿 sportsbot daily briefing 專欄風格) -->
+        <div class="stat-box rounded-2xl p-5 border border-sky-500/30 bg-gradient-to-r from-[#0f1c3f] to-[#050b14] flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                    <span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold">DAILY BRIEFING</span>
+                    <span class="text-slate-400 text-xs font-mono" id="header-update-time">最後同步時間：--</span>
+                </div>
+                <h2 class="text-lg font-bold text-white">2026-09-30 全球頂級賽事深度量化解析與 EV+ 複盤專欄</h2>
+                <p class="text-xs text-slate-300">結合大氣流體微氣候、xG 期望進球模型及凱利公式資金配置，精準挑選勝率最高之投資組合。</p>
+            </div>
+            <div>
+                <span class="bg-sky-500/10 border border-sky-500/30 text-sky-300 px-3 py-2 rounded-xl text-xs font-mono font-bold flex items-center gap-1.5">
+                    <i class="fa-solid fa-shield-halved text-emerald-400"></i> 量化風控模組運作中
+                </span>
+            </div>
+        </div>
+
+        <!-- 運動分類 Tab 導覽列 -->
         <div class="flex border-b border-slate-800 overflow-x-auto gap-2 pb-2 scrollbar-none" id="tab-container"></div>
+
+        <!-- 賽事專欄卡片列表 -->
         <div id="matches-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5">
             <div class="col-span-full text-center py-20 text-slate-400">
                 <i class="fa-solid fa-microchip fa-spin text-3xl mb-3 text-[#38bdf8]"></i>
-                <p>正在載入多維度貝氏機率模型矩陣...</p>
+                <p>正在載入專欄數據矩陣...</p>
             </div>
         </div>
+
     </main>
 
-    <!-- 極度專業博弈分析 Modal -->
+    <!-- 點擊卡片跳出的專業日報詳細分析 Modal 視窗 -->
     <div id="detail-modal" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-4">
         <div class="bg-[#0f1c3f] border border-sky-500/30 rounded-2xl w-full max-w-4xl max-h-[94vh] overflow-y-auto shadow-2xl relative">
             <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl p-2 rounded-full hover:bg-slate-800 transition z-10">
@@ -70,7 +97,7 @@
 
     <!-- Footer -->
     <footer class="bg-[#0f1c3f] border-t border-slate-800 text-center py-4 text-xs text-slate-500">
-        SportX Quant Lab © 2026 | 高階賽事演算法與 EV+ 資金配置系統
+        SportX Quant Lab © 2026 | Daily Sports Analytics & EV+ Strategy | 免責聲明：數據僅供模型統計分析參考。
     </footer>
 
     <script>
@@ -98,13 +125,14 @@
             try {
                 const response = await fetch('data.json?t=' + new Date().getTime());
                 sportsData = await response.json();
+                document.getElementById('header-update-time').innerText = `最後同步時間：${sportsData.updated_at}`;
                 renderTabs();
                 renderMatches(currentCategory);
             } catch (err) {
                 document.getElementById('matches-grid').innerHTML = `
                     <div class="col-span-full text-center py-20 text-red-400">
                         <i class="fa-solid fa-triangle-exclamation text-3xl mb-2"></i>
-                        <p>模型初始化失敗，請檢查資料串流 JSON。</p>
+                        <p>專欄資料載入失敗，請確認 GitHub Actions 是否執行完成。</p>
                     </div>`;
             }
         }
@@ -155,7 +183,7 @@
             const category = sportsData.categories[catKey];
 
             if (!category || !category.matches || category.matches.length === 0) {
-                matchesGrid.innerHTML = `<div class="col-span-full text-center py-16 text-slate-400">目前無有效量化回測標的</div>`;
+                matchesGrid.innerHTML = `<div class="col-span-full text-center py-16 text-slate-400">今日暫無此分類專欄賽事</div>`;
                 return;
             }
 
@@ -164,7 +192,7 @@
                     <div>
                         <div class="flex justify-between items-center mb-3">
                             <span class="bg-sky-500/10 text-sky-400 text-xs px-2.5 py-1 rounded-md font-mono font-bold tracking-wide border border-sky-500/20">${m.league}</span>
-                            <span class="text-xs text-slate-400 font-mono"><i class="fa-regular fa-clock mr-1"></i>${m.time}</span>
+                            <span class="text-xs text-slate-400 font-mono"><i class="fa-regular fa-clock mr-1"></i>${m.time} 開賽</span>
                         </div>
 
                         <div class="grid grid-cols-7 items-center my-4 text-center">
@@ -201,40 +229,40 @@
         function openModal(catKey, matchIndex) {
             const m = sportsData.categories[catKey].matches[matchIndex];
             const d = m.detail || {};
-            const unitVal = Math.round(userBankroll * 0.03);
+            const unitVal = Math.round(userBankroll * 0.03); // 1 Unit = 3% 本金
 
             const modalBody = document.getElementById('modal-body');
             modalBody.innerHTML = `
-                <!-- 標頭資訊 -->
+                <!-- 彈窗標頭 -->
                 <div class="border-b border-slate-800 pb-4">
                     <div class="flex items-center justify-between mb-3">
-                        <span class="bg-sky-500/20 text-sky-300 text-xs px-3 py-1 rounded-md font-mono font-bold border border-sky-500/30">${m.league}</span>
-                        <span class="text-xs text-slate-400 font-mono"><i class="fa-regular fa-clock mr-1"></i>${m.time} 開賽 (UTC+8)</span>
+                        <span class="bg-sky-500/20 text-sky-300 text-xs px-3 py-1 rounded-md font-mono font-bold border border-sky-500/30">${m.league} 每日專欄報告</span>
+                        <span class="text-xs text-slate-400 font-mono"><i class="fa-regular fa-clock mr-1"></i>${m.time} 開賽</span>
                     </div>
                     <div class="grid grid-cols-7 items-center text-center py-2">
                         <div class="col-span-3">
-                            <span class="text-[10px] bg-sky-950 text-sky-300 border border-sky-800 px-2 py-0.5 rounded font-mono">主場數據指標</span>
+                            <span class="text-[10px] bg-sky-950 text-sky-300 border border-sky-800 px-2 py-0.5 rounded font-mono">主場數據矩陣</span>
                             <h2 class="text-xl font-bold text-slate-100 mt-1">${m.homeTeam}</h2>
                             <div class="text-xs text-slate-400 mt-1 font-mono">${d.homeRecord || 'xG Efficiency: 1.84'}</div>
                         </div>
                         <div class="col-span-1 font-bold text-xl text-sky-400">VS</div>
                         <div class="col-span-3">
-                            <span class="text-[10px] bg-slate-900 text-slate-400 border border-slate-700 px-2 py-0.5 rounded font-mono">客場數據指標</span>
+                            <span class="text-[10px] bg-slate-900 text-slate-400 border border-slate-700 px-2 py-0.5 rounded font-mono">客場數據矩陣</span>
                             <h2 class="text-xl font-bold text-slate-100 mt-1">${m.awayTeam}</h2>
                             <div class="text-xs text-slate-400 mt-1 font-mono">${d.awayRecord || 'xGA Efficiency: 1.12'}</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 微觀環境與大氣流體力學 -->
+                <!-- 🌟 完整主客場球場與即時天氣資訊 -->
                 <div class="stat-box rounded-xl p-3.5 grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                     <div class="flex items-center gap-3">
                         <div class="w-9 h-9 rounded-lg bg-sky-500/10 flex items-center justify-center text-sky-400 text-base">
                             <i class="fa-solid ${d.weatherIcon || 'fa-cloud-sun'}"></i>
                         </div>
                         <div>
-                            <div class="text-slate-400 font-mono uppercase text-[10px]">微氣候與流體力學影響</div>
-                            <div class="font-semibold text-slate-200">${d.venue || '球場'} | ${d.weather || '微氣候穩定'}</div>
+                            <div class="text-slate-400 font-mono uppercase text-[10px]">比賽場地與氣候微環境</div>
+                            <div class="font-semibold text-slate-200">${d.venue || '官方指定球場'} | ${d.weather || '氣候穩定'}</div>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
@@ -242,31 +270,31 @@
                             <i class="fa-solid fa-wind"></i>
                         </div>
                         <div>
-                            <div class="text-slate-400 font-mono uppercase text-[10px]">大氣壓與風向向量場</div>
+                            <div class="text-slate-400 font-mono uppercase text-[10px]">即時溫度與風向向量場</div>
                             <div class="font-semibold text-slate-200">${d.temp || '20°C'} | ${d.wind || '向量風速 5 km/h'}</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 量化博弈分析師高階報告 -->
+                <!-- 專家日報極度專業量化分析報告 -->
                 <div class="space-y-3">
                     <h3 class="text-xs font-bold text-sky-300 flex items-center gap-1.5 uppercase tracking-wider font-mono">
-                        <i class="fa-solid fa-square-binary text-amber-400 text-sm"></i> 量化博弈分析師：多維度微觀矩陣報告
+                        <i class="fa-solid fa-square-binary text-amber-400 text-sm"></i> 專家日報：多維度微觀矩陣分析
                     </h3>
                     <div class="stat-box rounded-xl p-4 text-xs space-y-3 leading-relaxed text-slate-200">
-                        <p><strong class="text-sky-300 font-mono">⚡ 期望進球值 (xG) 與戰術熱區變異數：</strong> ${d.tacticalAnalysis || '雙方在中場三區（Middle Third）的控球率呈現非線性對稱，高位壓迫效率差（PPDA）顯示客隊在防守轉換期存在結構性漏洞。'}</p>
-                        <p><strong class="text-sky-300 font-mono">📊 隱含機率與市場流動性動能 (Implied Probability & Sharp Money)：</strong> ${d.oddsMovement || '亞洲盤初盤開出受讓深盤後，Sharp Money（職業資金）在 48 小時內於早盤（Early Market）迅速回補大分，導致Closing Line Value（CLV）出現明顯偏離。'}</p>
-                        <p><strong class="text-sky-300 font-mono">🧬 傷停架構崩解係數 (Squad Depth Entropy)：</strong> ${d.injuries || '核心戰術中樞缺陣導致球隊在攻防轉換時的傳球成功率（Passing Accuracy）預期下降 4.2%，威脅球權（Deep Completions）面臨邊際遞減。'}</p>
+                        <p><strong class="text-sky-300 font-mono">⚡ 期望進球值 (xG) 與戰術熱區：</strong> ${d.tacticalAnalysis || '雙方在中場三區的控球率呈現非線性對稱，高位壓迫效率差（PPDA）顯示客隊防守轉換期存在漏洞。'}</p>
+                        <p><strong class="text-sky-300 font-mono">📊 市場流動性動能 (Sharp Money)：</strong> ${d.oddsMovement || '亞洲指數初盤開出後，職業資金在早盤迅速回補大分，導致市場隱含機率出現顯著偏離。'}</p>
+                        <p><strong class="text-sky-300 font-mono">🧬 傷停架構與邊際效用：</strong> ${d.injuries || '核心戰術中樞缺陣導致球隊傳球成功率預期下降，威脅球權面臨邊際遞減。'}</p>
                     </div>
                 </div>
 
-                <!-- 凱利公式與 EV+ 資金配置表 -->
+                <!-- 🌟 資金分配與建議組合表 (聯動動態本金計算) -->
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
                         <h3 class="text-xs font-bold text-sky-300 flex items-center gap-1.5 uppercase tracking-wider font-mono">
-                            <i class="fa-solid fa-scale-balanced text-emerald-400 text-sm"></i> EV+ 期望值最優化資產配置 (總本金 NT$ ${userBankroll.toLocaleString()})
+                            <i class="fa-solid fa-scale-balanced text-emerald-400 text-sm"></i> EV+ 資產配置與組合推薦 (本金 NT$ ${userBankroll.toLocaleString()})
                         </h3>
-                        <span class="text-[11px] text-slate-400 font-mono">Kelly Unit (1%) = NT$ ${unitVal}</span>
+                        <span class="text-[11px] text-slate-400 font-mono">1 Unit = NT$ ${unitVal}</span>
                     </div>
 
                     <div class="stat-box rounded-xl p-3 text-xs overflow-x-auto">
@@ -274,10 +302,10 @@
                             <thead>
                                 <tr class="text-slate-400 border-b border-slate-800 text-[11px]">
                                     <th class="pb-2 text-left pl-2">賽局博弈維度</th>
-                                    <th class="pb-2 text-left">高階演算法推薦標的</th>
-                                    <th class="pb-2">市場歐賠 (Decimal Odds)</th>
-                                    <th class="pb-2">凱利配置單位</th>
-                                    <th class="pb-2 text-right pr-2">動態下注金額 (NT$)</th>
+                                    <th class="pb-2 text-left">高階日報推薦標的</th>
+                                    <th class="pb-2">市場歐賠 (Odds)</th>
+                                    <th class="pb-2">配置單位</th>
+                                    <th class="pb-2 text-right pr-2">建議金額 (NT$)</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-800/80 text-slate-200">
@@ -298,19 +326,19 @@
                     </div>
                 </div>
 
-                <!-- 貝氏定理機器學習結論 -->
+                <!-- 模型神經網路回測結論 -->
                 <div class="bg-gradient-to-r from-sky-950/60 to-blue-950/60 border border-sky-500/40 rounded-xl p-4 space-y-2 shadow-inner">
                     <div class="flex justify-between items-center font-mono">
                         <span class="text-xs font-bold text-sky-300 flex items-center gap-2">
-                            <i class="fa-solid fa-brain"></i> 貝氏神經網路模型回測向量
+                            <i class="fa-solid fa-brain"></i> 貝氏神經網路模型日報結論
                         </span>
                         <span class="bg-sky-500/20 text-sky-300 border border-sky-500/40 text-xs px-3 py-0.5 rounded-full font-mono">
-                            置信區間 (Confidence) ${m.confidence}%
+                            置信區間 ${m.confidence}%
                         </span>
                     </div>
                     <div class="text-base font-bold text-white pt-1 font-mono">${m.aiTrend}</div>
                     <p class="text-xs text-slate-300 leading-relaxed pt-1 border-t border-slate-800 mt-2 font-sans">
-                        ${d.aiReason || '基於蒙地卡羅模擬（Monte Carlo Simulation）10,000 次疊代運算，本場次之期望值（Expected Value, EV+）高達 +6.8%，極具對沖與長期複利投資價值。'}
+                        ${d.aiReason || '基於蒙地卡羅模擬疊代運算，本場次期望值（EV+）顯著，極具長期複利價值。'}
                     </p>
                 </div>
             `;
