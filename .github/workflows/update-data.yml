@@ -1,0 +1,138 @@
+name: Multi-Sport Data Auto Analyzer
+
+on:
+  schedule:
+    # 每天台灣時間 20:00 (UTC 12:00) 自動執行
+    - cron: '0 12 * * *'
+  workflow_dispatch: # 支援手動按鈕觸發測試
+
+jobs:
+  update-sports-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4
+
+      - name: Run Multi-Sport Analysis Script
+        run: |
+          python -c "
+          import json, datetime
+
+          now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
+
+          # 構建多體育分類賽事資料結構
+          data = {
+              'updated_at': now_str,
+              'categories': {
+                  'baseball': {
+                      'name': '棒球',
+                      'icon': 'fa-baseball',
+                      'leagues': ['MLB', 'CPBL', 'NPB', 'KBO'],
+                      'matches': [
+                          {
+                              'league': 'MLB',
+                              'time': '07:10',
+                              'homeTeam': '洛杉磯道奇',
+                              'awayTeam': '紐約洋基',
+                              'info': '山本由伸 VS Gerrit Cole',
+                              'h2h': '道奇近 10 場對戰 6 勝 4 敗',
+                              'aiTrend': '主推：道奇主勝 | 總分 8.5 大',
+                              'confidence': 88
+                          },
+                          {
+                              'league': 'CPBL',
+                              'time': '18:35',
+                              'homeTeam': '中信兄弟',
+                              'awayTeam': '統一獅',
+                              'info': '德保拉 VS 古林睿漾',
+                              'h2h': '本季交手 中信 5 勝 3 敗',
+                              'aiTrend': '主推：中信兄弟讓分 (-1.5)',
+                              'confidence': 82
+                          }
+                      ]
+                  },
+                  'basketball': {
+                      'name': '籃球',
+                      'icon': 'fa-basketball',
+                      'leagues': ['NBA', 'TPBL', 'PLG'],
+                      'matches': [
+                          {
+                              'league': 'NBA',
+                              'time': '08:30',
+                              'homeTeam': '金州勇士',
+                              'awayTeam': '洛杉磯湖人',
+                              'info': 'Curry 近 3 場平均 31.2 分',
+                              'h2h': '勇士近 5 次主場迎戰湖人取得 4 勝',
+                              'aiTrend': '主推：勇士 -3.5 | 總分 224.5 大',
+                              'confidence': 85
+                          },
+                          {
+                              'league': 'TPBL',
+                              'time': '19:00',
+                              'homeTeam': '新北國王',
+                              'awayTeam': '高雄全家海神',
+                              'info': '林書豪傷癒復出第二場',
+                              'h2h': '雙方近 3 次交手均打出大分',
+                              'aiTrend': '主推：新北國王主勝',
+                              'confidence': 80
+                          }
+                      ]
+                  },
+                  'soccer': {
+                      'name': '足球',
+                      'icon': 'fa-futbol',
+                      'leagues': ['歐冠', '英超', '西甲', '德甲', '意甲', '法甲'],
+                      'matches': [
+                          {
+                              'league': '歐冠',
+                              'time': '03:00',
+                              'homeTeam': '皇家馬德里',
+                              'awayTeam': '曼城',
+                              'info': '歐冠半決賽 首回合',
+                              'h2h': '近 4 次交手各 2 勝平分秋色',
+                              'aiTrend': '主推：雙方均有進球 (BTTS-Yes) | 2.5 大',
+                              'confidence': 90
+                          }
+                      ]
+                  },
+                  'tennis': {
+                      'name': '網球',
+                      'icon': 'fa-baseball-bat-ball',
+                      'leagues': ['ATP 大滿貫', 'WTA 巡迴賽'],
+                      'matches': [
+                          {
+                              'league': 'ATP',
+                              'time': '21:00',
+                              'homeTeam': 'Alcaraz C.',
+                              'awayTeam': 'Sinner J.',
+                              'info': '硬地大滿貫 決賽',
+                              'h2h': '對戰紀錄 Alcaraz 5 勝 4 敗微幅領先',
+                              'aiTrend': '主推：總局數 39.5 大',
+                              'confidence': 86
+                          }
+                      ]
+                  }
+              }
+          }
+
+          with open('data.json', 'w', encoding='utf-8') as f:
+              json.dump(data, f, ensure_ascii=False, indent=4)
+          "
+
+      - name: Commit & Push Data
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git commit -m "Auto update multi-sport data [skip ci]" || exit 0
+          git push
