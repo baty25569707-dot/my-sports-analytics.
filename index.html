@@ -18,25 +18,32 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Header -->
+    <!-- Header / 頂部選單 -->
     <header class="bg-[#1c2541] border-b border-slate-700 py-4 px-6 sticky top-0 z-40 shadow-lg">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
             <div class="flex items-center gap-3">
                 <i class="fa-solid fa-chart-line text-[#48cae4] text-2xl"></i>
                 <h1 class="text-xl font-bold tracking-wide bg-gradient-to-r from-white via-cyan-200 to-[#48cae4] bg-clip-text text-transparent">
                     SportX 智彩數據分析站
                 </h1>
             </div>
-            <div class="flex items-center gap-4 text-xs">
-                <div id="update-time" class="text-slate-400 flex items-center gap-1.5">
-                    <i class="fa-regular fa-clock"></i> 載入中...
+            
+            <div class="flex flex-wrap items-center gap-3 text-xs">
+                <!-- 本金設定計算器 -->
+                <div class="bg-[#0b132b]/80 border border-cyan-500/30 px-3 py-1.5 rounded-xl flex items-center gap-2">
+                    <span class="text-slate-400 font-semibold"><i class="fa-solid fa-wallet text-amber-400 mr-1"></i>總本金:</span>
+                    <span class="text-cyan-300 font-bold">NT$</span>
+                    <input type="number" id="user-bankroll" value="10000" step="1000" onchange="updateBankroll()" class="w-20 bg-slate-800 text-white font-bold font-mono px-2 py-0.5 rounded border border-slate-600 focus:outline-none focus:border-cyan-400 text-center">
+                    <span class="text-slate-400 text-[11px]">(1 Unit = <span id="unit-val" class="text-amber-300 font-bold">NT$ 300</span>)</span>
                 </div>
-                <div class="bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 px-3 py-1 rounded-full flex items-center gap-1.5 font-mono">
+
+                <!-- 5分鐘倒數 -->
+                <div class="bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 px-3 py-1.5 rounded-xl flex items-center gap-1.5 font-mono">
                     <span class="relative flex h-2 w-2">
                       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                       <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
                     </span>
-                    自動更新倒數: <span id="countdown" class="font-bold text-white">05:00</span>
+                    自動更新: <span id="countdown" class="font-bold text-white">05:00</span>
                 </div>
             </div>
         </div>
@@ -48,12 +55,12 @@
         <div id="matches-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5">
             <div class="col-span-full text-center py-20 text-slate-400">
                 <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3 text-[#48cae4]"></i>
-                <p>正在加載數據分析...</p>
+                <p>正在加載賽事數據與博弈分析...</p>
             </div>
         </div>
     </main>
 
-    <!-- 詳細數據Modal -->
+    <!-- 詳細數據與分析師彈窗 (Modal) -->
     <div id="detail-modal" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-4">
         <div class="bg-[#1c2541] border border-slate-700 rounded-2xl w-full max-w-3xl max-h-[92vh] overflow-y-auto shadow-2xl relative">
             <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl p-2 rounded-full hover:bg-slate-700/50 transition z-10">
@@ -65,16 +72,26 @@
 
     <!-- Footer -->
     <footer class="bg-[#1c2541] border-t border-slate-800 text-center py-4 text-xs text-slate-500">
-        SportX Analytics © 2026 | 自動即時數據同步中 | 免責聲明：本站數據僅供體育愛好者統計分析參考。
+        SportX Analytics © 2026 | 專業體育博弈分析與資金風險管理系統
     </footer>
 
     <script>
         let sportsData = null;
         let currentCategory = 'baseball';
+        let userBankroll = 10000; // 預設 NT$ 10,000
         const UPDATE_INTERVAL_SEC = 300;
         let countdownSec = UPDATE_INTERVAL_SEC;
 
+        function updateBankroll() {
+            const val = parseFloat(document.getElementById('user-bankroll').value);
+            if (!isNaN(val) && val > 0) {
+                userBankroll = val;
+                document.getElementById('unit-val').innerText = `NT$ ${Math.round(userBankroll * 0.03)}`;
+            }
+        }
+
         async function init() {
+            updateBankroll();
             await fetchMatchesData();
             startCountdown();
         }
@@ -83,7 +100,6 @@
             try {
                 const response = await fetch('data.json?t=' + new Date().getTime());
                 sportsData = await response.json();
-                document.getElementById('update-time').innerHTML = `<i class="fa-regular fa-clock"></i> 最後更新：${sportsData.updated_at}`;
                 renderTabs();
                 renderMatches(currentCategory);
             } catch (err) {
@@ -187,6 +203,7 @@
         function openModal(catKey, matchIndex) {
             const m = sportsData.categories[catKey].matches[matchIndex];
             const d = m.detail || {};
+            const unitVal = Math.round(userBankroll * 0.03); // 1 Unit = 本金的 3%
 
             const modalBody = document.getElementById('modal-body');
             modalBody.innerHTML = `
@@ -200,122 +217,72 @@
                         <div class="col-span-3">
                             <span class="text-[11px] bg-cyan-950 text-cyan-300 border border-cyan-800 px-2 py-0.5 rounded">主場</span>
                             <h2 class="text-xl font-bold text-slate-100 mt-1">${m.homeTeam}</h2>
-                            <div class="text-xs text-slate-400 mt-1">戰績：${d.homeRecord || '12勝 8敗'}</div>
+                            <div class="text-xs text-slate-400 mt-1">${d.homeRecord || '戰績資訊'}</div>
                         </div>
                         <div class="col-span-1 font-bold text-xl text-cyan-400">VS</div>
                         <div class="col-span-3">
                             <span class="text-[11px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded">客場</span>
                             <h2 class="text-xl font-bold text-slate-100 mt-1">${m.awayTeam}</h2>
-                            <div class="text-xs text-slate-400 mt-1">戰績：${d.awayRecord || '10勝 10敗'}</div>
+                            <div class="text-xs text-slate-400 mt-1">${d.awayRecord || '戰績資訊'}</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 氣候與場地資訊 -->
-                <div class="stat-box rounded-xl p-3.5 grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-base">
-                            <i class="fa-solid ${d.weatherIcon || 'fa-sun'}"></i>
-                        </div>
-                        <div>
-                            <div class="text-slate-400">場地氣候</div>
-                            <div class="font-semibold text-slate-200">${d.venue || '官方場地'} | ${d.weather || '晴朗'}</div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-base">
-                            <i class="fa-solid fa-temperature-half"></i>
-                        </div>
-                        <div>
-                            <div class="text-slate-400">溫度 / 風速</div>
-                            <div class="font-semibold text-slate-200">${d.temp || '22°C'} | ${d.wind || '微風 8 km/h'}</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 盤口與大眾資金趨勢 -->
-                ${d.odds ? `
-                <div class="space-y-2">
-                    <h3 class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
-                        <i class="fa-solid fa-coins text-amber-400"></i> 即時盤口與投注資金流向
+                <!-- 1. 專業博弈分析師深度報告 -->
+                <div class="space-y-3">
+                    <h3 class="text-xs font-bold text-cyan-300 flex items-center gap-1.5 uppercase tracking-wider">
+                        <i class="fa-solid fa-user-tie text-amber-400 text-sm"></i> 博弈分析師專屬報告 (Analyst Insights)
                     </h3>
-                    <div class="grid grid-cols-3 gap-2 text-center text-xs">
-                        <div class="stat-box p-2.5 rounded-lg">
-                            <div class="text-slate-400 text-[11px]">讓分盤 (Spread)</div>
-                            <div class="font-bold text-cyan-300 mt-0.5">${d.odds.spread || '-'}</div>
-                        </div>
-                        <div class="stat-box p-2.5 rounded-lg">
-                            <div class="text-slate-400 text-[11px]">大小分 (O/U)</div>
-                            <div class="font-bold text-amber-300 mt-0.5">${d.odds.total || '-'}</div>
-                        </div>
-                        <div class="stat-box p-2.5 rounded-lg">
-                            <div class="text-slate-400 text-[11px]">獨贏 (ML)</div>
-                            <div class="font-bold text-emerald-300 mt-0.5">${d.odds.moneyline || '-'}</div>
-                        </div>
+                    <div class="stat-box rounded-xl p-4 text-xs space-y-2.5 leading-relaxed text-slate-200">
+                        <p><strong class="text-cyan-300">⚔️ 戰術與體能面：</strong> ${d.tacticalAnalysis || '兩隊近期攻防節奏快速，主力陣容齊全。'}</p>
+                        <p><strong class="text-cyan-300">📈 盤口與資金走勢：</strong> ${d.oddsMovement || '讓分盤水位穩定，大分資金較受青睞。'}</p>
+                        <p><strong class="text-cyan-300">🚨 傷停與風險評估：</strong> ${d.injuries || '目前無重大傷兵報告。'}</p>
                     </div>
                 </div>
-                ` : ''}
 
-                <!-- 先發投手 / 關鍵球員對決數據表格 -->
-                ${d.pitcherStats ? `
-                <div class="space-y-2">
-                    <h3 class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
-                        <i class="fa-solid fa-user-ninja text-cyan-400"></i> 先發/關鍵球員數據對比
-                    </h3>
+                <!-- 2. 每場下注組合與本金分配表 (根據本金即時計算) -->
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xs font-bold text-cyan-300 flex items-center gap-1.5 uppercase tracking-wider">
+                            <i class="fa-solid fa-coins text-emerald-400 text-sm"></i> 建議下注組合與資金分配 (本金 NT$ ${userBankroll.toLocaleString()})
+                        </h3>
+                        <span class="text-[11px] text-slate-400">1 Unit = NT$ ${unitVal}</span>
+                    </div>
+
                     <div class="stat-box rounded-xl p-3 text-xs overflow-x-auto">
                         <table class="w-full text-center">
                             <thead>
                                 <tr class="text-slate-400 border-b border-slate-700/60 text-[11px]">
-                                    <th class="pb-2 text-left">${m.homeTeam}</th>
-                                    <th class="pb-2">數據指標</th>
-                                    <th class="pb-2 text-right">${m.awayTeam}</th>
+                                    <th class="pb-2 text-left pl-2">組合類型</th>
+                                    <th class="pb-2 text-left">推薦選項</th>
+                                    <th class="pb-2">賠率</th>
+                                    <th class="pb-2">建議單位</th>
+                                    <th class="pb-2 text-right pr-2">建議金額 (NT$)</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-800/60 font-mono text-slate-200">
-                                <tr>
-                                    <td class="py-2 text-left font-sans font-bold text-cyan-300">${d.pitcherStats.homeName}</td>
-                                    <td class="py-2 text-slate-400 font-sans">關鍵選手</td>
-                                    <td class="py-2 text-right font-sans font-bold text-cyan-300">${d.pitcherStats.awayName}</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-1.5 text-left">${d.pitcherStats.homeEra}</td>
-                                    <td class="py-1.5 text-slate-400 font-sans">防禦率 (ERA) / 場均得分</td>
-                                    <td class="py-1.5 text-right">${d.pitcherStats.awayEra}</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-1.5 text-left">${d.pitcherStats.homeWhip}</td>
-                                    <td class="py-1.5 text-slate-400 font-sans">WHIP / 命中率</td>
-                                    <td class="py-1.5 text-right">${d.pitcherStats.awayWhip}</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-1.5 text-left">${d.pitcherStats.homeK}</td>
-                                    <td class="py-1.5 text-slate-400 font-sans">三振數 / 場均助攻</td>
-                                    <td class="py-1.5 text-right">${d.pitcherStats.awayK}</td>
-                                </tr>
+                                ${(d.bettingOptions || []).map(opt => {
+                                    const stake = Math.round(opt.units * unitVal);
+                                    return `
+                                        <tr>
+                                            <td class="py-2.5 text-left pl-2 font-sans font-bold text-cyan-300">${opt.type}</td>
+                                            <td class="py-2.5 text-left font-sans text-slate-100">${opt.selection}</td>
+                                            <td class="py-2.5 font-bold text-amber-300">${opt.odds}</td>
+                                            <td class="py-2.5 text-slate-300 font-sans">${opt.units} Unit${opt.units > 1 ? 's' : ''}</td>
+                                            <td class="py-2.5 text-right pr-2 font-bold text-emerald-400">NT$ ${stake.toLocaleString()}</td>
+                                        </tr>
+                                    `;
+                                }).join('')}
                             </tbody>
                         </table>
                     </div>
                 </div>
-                ` : ''}
 
-                <!-- 詳細文字與傷兵分析 -->
-                <div class="space-y-2">
-                    <h3 class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
-                        <i class="fa-solid fa-list-check text-emerald-400"></i> 戰術與傷兵綜合檢視
-                    </h3>
-                    <div class="stat-box rounded-xl p-3.5 text-xs space-y-2 text-slate-300">
-                        <p><strong class="text-cyan-300">歷史對戰：</strong> ${m.h2h}</p>
-                        <p><strong class="text-cyan-300">主客場近況：</strong> ${d.recentForm || '雙方近況穩定'}</p>
-                        <p><strong class="text-cyan-300">傷兵報告：</strong> ${d.injuries || '目前無重大傷兵'}</p>
-                        <p><strong class="text-cyan-300">關鍵數據：</strong> ${d.keyStat || '雙方先發投手近 3 場穩定度極高'}</p>
-                    </div>
-                </div>
-
-                <!-- AI 推薦區塊 -->
+                <!-- 3. AI / 分析師綜合推薦理由 -->
                 <div class="bg-gradient-to-r from-cyan-950/50 to-blue-950/50 border border-cyan-500/40 rounded-xl p-4 space-y-2 shadow-inner">
                     <div class="flex justify-between items-center">
                         <span class="text-xs font-bold text-cyan-300 flex items-center gap-2">
-                            <i class="fa-solid fa-robot"></i> AI 智彩數據模型綜合推薦
+                            <i class="fa-solid fa-robot"></i> 綜合評估與風控心法
                         </span>
                         <span class="bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-xs px-3 py-0.5 rounded-full font-mono">
                             信心度 ${m.confidence}%
@@ -323,7 +290,7 @@
                     </div>
                     <div class="text-base font-bold text-white pt-1">${m.aiTrend}</div>
                     <p class="text-xs text-slate-300 leading-relaxed pt-1 border-t border-slate-700/50 mt-2">
-                        ${d.aiReason || '結合先發表現、牛棚防禦率、主客場過盤率及天候進行機器學習模型運算。'}
+                        ${d.aiReason || '建議控制單場總暴露風險不超過總本金 15%，並依據注碼配比進行嚴格資金控管。'}
                     </p>
                 </div>
             `;
