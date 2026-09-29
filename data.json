@@ -1,0 +1,108 @@
+{
+    "updated_at": "2026-09-29 18:39",
+    "categories": {
+        "baseball": {
+            "name": "棒球",
+            "leagues": [
+                "MLB",
+                "CPBL",
+                "NPB",
+                "KBO"
+            ],
+            "matches": [
+                {
+                    "league": "MLB",
+                    "time": "07:10",
+                    "homeTeam": "洛杉磯道奇",
+                    "awayTeam": "紐約洋基",
+                    "info": "山本由伸 VS Gerrit Cole",
+                    "h2h": "道奇近 10 場對戰 6 勝 4 敗",
+                    "aiTrend": "主推：道奇主勝 | 總分 8.5 大",
+                    "confidence": 88
+                },
+                {
+                    "league": "CPBL",
+                    "time": "18:35",
+                    "homeTeam": "中信兄弟",
+                    "awayTeam": "統一獅",
+                    "info": "德保拉 VS 古林睿漾",
+                    "h2h": "本季交手 中信 5 勝 3 敗",
+                    "aiTrend": "主推：中信兄弟讓分 (-1.5)",
+                    "confidence": 82
+                }
+            ]
+        },
+        "basketball": {
+            "name": "籃球",
+            "leagues": [
+                "NBA",
+                "TPBL",
+                "PLG"
+            ],
+            "matches": [
+                {
+                    "league": "NBA",
+                    "time": "08:30",
+                    "homeTeam": "金州勇士",
+                    "awayTeam": "洛杉磯湖人",
+                    "info": "Curry 近 3 場平均 31.2 分",
+                    "h2h": "勇士近 5 次主場迎戰湖人取得 4 勝",
+                    "aiTrend": "主推：勇士 -3.5 | 總分 224.5 大",
+                    "confidence": 85
+                },
+                {
+                    "league": "TPBL",
+                    "time": "19:00",
+                    "homeTeam": "新北國王",
+                    "awayTeam": "高雄全家海神",
+                    "info": "林書豪傷癒復出",
+                    "h2h": "雙方近 3 次交手均打出大分",
+                    "aiTrend": "主推：新北國王主勝",
+                    "confidence": 80
+                }
+            ]
+        },
+        "soccer": {
+            "name": "足球",
+            "leagues": [
+                "歐冠",
+                "英超",
+                "西甲",
+                "德甲",
+                "意甲",
+                "法甲"
+            ],
+            "matches": [
+                {
+                    "league": "歐冠",
+                    "time": "03:00",
+                    "homeTeam": "皇家馬德里",
+                    "awayTeam": "曼城",
+                    "info": "歐冠淘汰賽",
+                    "h2h": "近 4 次交手各 2 勝平分秋色",
+                    "aiTrend": "主推：雙方均有進球 (BTTS) | 2.5 大",
+                    "confidence": 90
+                }
+            ]
+        },
+        "tennis": {
+            "name": "網球",
+            "leagues": [
+                "ATP 大滿貫",
+                "WTA 巡迴賽"
+            ],
+            "matches": [
+                {
+                    "league": "ATP",
+                    "time": "21:00",
+                    "homeTeam": "Alcaraz C.",
+                    "awayTeam": "Sinner J.",
+                    "info": "硬地賽 決賽",
+                    "h2h": "對戰紀錄 Alcaraz 5 勝 4 敗",
+                    "aiTrend": "主推：總局數 39.5 大",
+                    "confidence": 86
+                }
+            ]
+        }
+    }
+}
