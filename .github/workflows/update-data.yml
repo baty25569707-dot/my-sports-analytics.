@@ -46,6 +46,11 @@ jobs:
                               'detail': {
                                   'homeRecord': '主場 4勝 1敗 (近5場大分率 100%)',
                                   'awayRecord': '客場 3勝 2敗 (平均場均進球 2.2)',
+                                  'venue': '伊甸園體育場 (Eden Aréna)',
+                                  'weather': '多雲陣雨',
+                                  'weatherIcon': 'fa-cloud-rain',
+                                  'temp': '16°C',
+                                  'wind': '陣風 11 km/h',
                                   'tacticalAnalysis': '英格蘭前場火力旺盛，近 5 場賽事平均創造 2.8 次絕佳進攻機會。然而客場作戰時兩翼壓上易留邊路空檔；捷克主場風格極具侵略性，近 5 場全數打出 2.5 球以上大分。',
                                   'oddsMovement': '初盤開出英格蘭讓 1.0/1.5 球，後續資金流入讓分水位維持在 1.85 低水；大分 2.5 球水位由 1.95 調降至 1.80，大分較受市場資金青睞。',
                                   'injuries': '英格蘭中場進行小幅輪換，鋒線主力全數登場；捷克防線主力中衛因累積黃牌停賽，後防抗壓性大打折扣。',
@@ -76,6 +81,11 @@ jobs:
                               'detail': {
                                   'homeRecord': '主場 32勝 15敗',
                                   'awayRecord': '客場 23勝 22敗',
+                                  'venue': '道奇體育場 (Dodger Stadium)',
+                                  'weather': '晴朗乾燥',
+                                  'weatherIcon': 'fa-sun',
+                                  'temp': '23°C',
+                                  'wind': '微風 8 km/h (吹向外野)',
                                   'tacticalAnalysis': '山本由伸近 3 場先發防禦率僅 1.80，主場宰制力極強；洋基近期牛棚負擔過重，近 3 場後援防禦率上升至 4.95。',
                                   'oddsMovement': '道奇獨贏水位從 1.70 降至 1.62，市場資金持續看好道奇主場取勝。',
                                   'injuries': '道奇主力打線齊全；洋基牛棚兩名主力投手因傷缺陣。',
@@ -106,6 +116,11 @@ jobs:
                               'detail': {
                                   'homeRecord': '主場 18勝 5敗',
                                   'awayRecord': '客場 9勝 13敗',
+                                  'venue': '大通中心 (Chase Center)',
+                                  'weather': '室內館',
+                                  'weatherIcon': 'fa-building',
+                                  'temp': '20°C',
+                                  'wind': '無風',
                                   'tacticalAnalysis': '勇士主場三分球場均命中 16.2 記為聯盟第一；湖人 Anthony Davis 腳踝有傷，禁區防守面臨大考驗。',
                                   'oddsMovement': '讓分盤口從 -2.5 調高至 -3.5，資金向勇士傾斜。',
                                   'injuries': '湖人 Anthony Davis 出賽成疑 (50%)。',
@@ -135,6 +150,11 @@ jobs:
                               'detail': {
                                   'homeRecord': '硬地戰績 32勝 6敗',
                                   'awayRecord': '硬地戰績 38勝 4敗',
+                                  'venue': '中央球場 (Center Court)',
+                                  'weather': '晴朗',
+                                  'weatherIcon': 'fa-sun',
+                                  'temp': '25°C',
+                                  'wind': '6 km/h',
                                   'tacticalAnalysis': '雙方實力在伯仲之間，過去在大滿貫 3 次交手全數打滿至少 4 盤。',
                                   'oddsMovement': '獨贏盤雙方均為 1.90 平手水位。',
                                   'injuries': '雙方狀態良好無傷病。',
@@ -159,5 +179,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add data.json
-          git commit -m "Auto update professional sports betting analytics" || exit 0
+          git commit -m "Auto update detailed sports data with weather and betting options" || exit 0
           git push
