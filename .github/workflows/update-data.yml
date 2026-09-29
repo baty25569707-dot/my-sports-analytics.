@@ -51,14 +51,14 @@ jobs:
                                   'weatherIcon': 'fa-cloud-rain',
                                   'temp': '16°C',
                                   'wind': '側向向量風速 11 km/h',
-                                  'tacticalAnalysis': '依據進攻三區傳遞成功率與垂直推進速度矩陣，客隊在防守轉換期的 PPDA 高達 12.8，顯示其在肋部空間存在結構性防守熵增；主隊透過高位逼搶產生的球權回收率達 31%。',
+                                  'tacticalAnalysis': '依據進進攻三區傳遞成功率與垂直推進速度矩陣，客隊在防守轉換期的 PPDA 高達 12.8，顯示其在肋部空間存在結構性防守熵增；主隊透過高位逼搶產生的球權回收率達 31%。',
                                   'oddsMovement': '亞洲指數初盤呈現深盤降水格局，Sharp Money（職業資金）在早盤持續注入大分，造成隱含機率與實際勝率出現 4.6% 的正向期望值偏離。',
                                   'injuries': '主隊後防中樞核心因累積黃牌循環停賽，導致防線協防速率預期下降 7.5%。',
                                   'bettingOptions': [
                                       {'type': '讓分/亞洲盤', 'selection': '英格蘭 -1.0 帕', 'odds': '1.85', 'units': 1.5},
                                       {'type': '大小分/總分盤', 'selection': '全場 2.5 大分', 'odds': '1.80', 'units': 1.5},
                                       {'type': '角球衍生盤', 'selection': '全場角球 9.5 大', 'odds': '1.85', 'units': 0.5},
-                                      {'type': '高收益複合串關', 'selection': '2.5대 + 巴西獨贏 (2-Fold)', 'odds': '2.61', 'units': 0.5}
+                                      {'type': '高收益複合串關', 'selection': '2.5大 + 巴西獨贏 (2-Fold)', 'odds': '2.61', 'units': 0.5}
                                   ],
                                   'aiReason': '結合卜瓦松分佈與蒙地卡羅 10,000 次疊代模擬，本場比賽總進球數落於 3.2 顆之貝氏機率高達 74%，屬於典型的高 EV+ 專欄推薦標的。'
                               }
@@ -179,5 +179,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add data.json
-          git commit -m "Auto update sports daily brief report for 2026-09-30" || exit 0
+          git commit -m "Auto update enhanced daily report with expected profit calculation" || exit 0
           git push
