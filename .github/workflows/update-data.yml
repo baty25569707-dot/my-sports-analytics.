@@ -35,13 +35,13 @@ jobs:
                       'leagues': ['歐冠', '英超', '西甲', '國家隊'],
                       'matches': [
                           {
-                              'league': '國家隊',
+                              'league': '2026-09-30 國家隊焦點專欄',
                               'time': '20:00',
                               'homeTeam': '捷克',
                               'awayTeam': '英格蘭',
                               'info': '歐國聯核心交鋒 | xG 效率模型對抗',
                               'h2h': '歷史對戰樣本標準差：樣本合意度 3.2 顆',
-                              'aiTrend': '高階演算法主推：全場 2.5 大分 (EV+ 運算)',
+                              'aiTrend': '日報主推：全場 2.5 大分 (EV+ 運算)',
                               'confidence': 89,
                               'detail': {
                                   'homeRecord': '主場 xG: 1.92 | 轉換率 18.4%',
@@ -51,16 +51,16 @@ jobs:
                                   'weatherIcon': 'fa-cloud-rain',
                                   'temp': '16°C',
                                   'wind': '側向向量風速 11 km/h',
-                                  'tacticalAnalysis': '依據進攻三區傳遞成功率與垂直推進速度矩陣，客隊在防守轉換期（Defensive Transition）的 PPDA（防守壓迫次數）高達 12.8，顯示其在肋部空間存在結構性防守熵增；主隊透過高位逼搶產生的球權回收率達 31%，預期能有效打破博弈機構開出的盤口預期區間。',
-                                  'oddsMovement': '亞洲指數（Asian Handicap）初盤呈現深盤降水格局，Sharp Money（職業資金）在亞洲早盤流動性窗口期間持續注入大分（Over），造成隱含機率（Implied Probability）與實際勝率出現 4.6% 的正向期望值（EV+）偏離。',
-                                  'injuries': '主隊後防中樞核心因累積黃牌循環停賽，導致防線橫向補防協防速率（Lateral Coverage Speed）預期下降 7.5%；客隊中場輪換不影響核心節奏掌控力。',
+                                  'tacticalAnalysis': '依據進攻三區傳遞成功率與垂直推進速度矩陣，客隊在防守轉換期的 PPDA 高達 12.8，顯示其在肋部空間存在結構性防守熵增；主隊透過高位逼搶產生的球權回收率達 31%。',
+                                  'oddsMovement': '亞洲指數初盤呈現深盤降水格局，Sharp Money（職業資金）在早盤持續注入大分，造成隱含機率與實際勝率出現 4.6% 的正向期望值偏離。',
+                                  'injuries': '主隊後防中樞核心因累積黃牌循環停賽，導致防線協防速率預期下降 7.5%。',
                                   'bettingOptions': [
                                       {'type': '讓分/亞洲盤', 'selection': '英格蘭 -1.0 帕', 'odds': '1.85', 'units': 1.5},
                                       {'type': '大小分/總分盤', 'selection': '全場 2.5 大分', 'odds': '1.80', 'units': 1.5},
                                       {'type': '角球衍生盤', 'selection': '全場角球 9.5 大', 'odds': '1.85', 'units': 0.5},
-                                      {'type': '高收益複合串關', 'selection': '2.5大 + 巴西獨贏 (2-Fold)', 'odds': '2.61', 'units': 0.5}
+                                      {'type': '高收益複合串關', 'selection': '2.5대 + 巴西獨贏 (2-Fold)', 'odds': '2.61', 'units': 0.5}
                                   ],
-                                  'aiReason': '結合卜瓦松分佈（Poisson Distribution）與蒙地卡羅 10,000 次疊代模擬，本場比賽總進球數落於 3.2 顆之貝氏機率高達 74%，屬於典型的高 EV+ 套利標的。'
+                                  'aiReason': '結合卜瓦松分佈與蒙地卡羅 10,000 次疊代模擬，本場比賽總進球數落於 3.2 顆之貝氏機率高達 74%，屬於典型的高 EV+ 專欄推薦標的。'
                               }
                           }
                       ]
@@ -70,13 +70,13 @@ jobs:
                       'leagues': ['MLB', 'CPBL', 'NPB'],
                       'matches': [
                           {
-                              'league': 'MLB',
+                              'league': '2026-09-30 MLB 專欄',
                               'time': '07:10',
                               'homeTeam': '洛杉磯道奇',
                               'awayTeam': '紐約洋基',
                               'info': '山本由伸 (FIP 2.40) VS Gerrit Cole (FIP 3.05)',
                               'h2h': '進攻權重指數 WAR 差異顯著',
-                              'aiTrend': '高階演算法主推：道奇讓分盤 (-1.5)',
+                              'aiTrend': '日報主推：道奇讓分盤 (-1.5)',
                               'confidence': 87,
                               'detail': {
                                   'homeRecord': 'wRC+ 124 | 牛棚 WAR +4.2',
@@ -86,16 +86,16 @@ jobs:
                                   'weatherIcon': 'fa-sun',
                                   'temp': '23°C',
                                   'wind': '外野順風向量 8 km/h',
-                                  'tacticalAnalysis': '先發投手之獨立防禦率（FIP）與期望揮空率（Whiff Rate）呈現極度優勢。主隊打線面對右投手之 wRC+（加權得分創造值）高達 128，且牛棚疲勞係數（Bullpen Fatigue Index）顯著優於客隊牛棚防禦崩潰臨界點。',
-                                  'oddsMovement': '市場流動性在終場收盤前（Closing Line）出現顯著單邊傾斜，機構調整賠率以對沖道奇讓分過熱風險。',
-                                  'injuries': '客隊牛棚主力中繼投手進入 15 天傷兵名單，導致後援防禦率（Relief ERA）邊際效用遞減。',
+                                  'tacticalAnalysis': '先發投手之獨立防禦率與期望揮空率呈現極度優勢。主隊打線面對右投手之 wRC+ 高達 128，牛棚疲勞係數優於客隊防禦崩潰臨界點。',
+                                  'oddsMovement': '市場流動性在收盤前出現顯著單邊傾斜，機構調整賠率對沖讓分過熱風險。',
+                                  'injuries': '客隊牛棚主力中繼投手進入 15 天傷兵名單，後援防禦率邊際效用遞減。',
                                   'bettingOptions': [
                                       {'type': '讓分盤', 'selection': '道奇 -1.5', 'odds': '1.90', 'units': 1.5},
                                       {'type': '大小分', 'selection': '全場 8.5 大分', 'odds': '1.85', 'units': 1.0},
                                       {'type': '不讓分獨贏', 'selection': '道奇主勝 (ML)', 'odds': '1.62', 'units': 1.0},
                                       {'type': '跨賽事串關', 'selection': '道奇勝 + 勇士勝', 'odds': '2.45', 'units': 0.5}
                                   ],
-                                  'aiReason': '透過進階 sabermetrics 數據模型交叉檢視，主隊在先發投球局數（IP）與打者三振保送比（K/BB）具絕對統治力。'
+                                  'aiReason': '透過進階 sabermetrics 模型交叉檢視，主隊在先發投球局數與三振保送比具絕對統治力。'
                               }
                           }
                       ]
@@ -105,13 +105,13 @@ jobs:
                       'leagues': ['NBA', 'TPBL'],
                       'matches': [
                           {
-                              'league': 'NBA',
+                              'league': '2026-09-30 NBA 專欄',
                               'time': '08:30',
                               'homeTeam': '金州勇士',
                               'awayTeam': '洛杉磯湖人',
                               'info': '有效命中率 eFG% 與進攻效率對決',
                               'h2h': 'Pace 節奏係數：102.5 高速運轉',
-                              'aiTrend': '高階演算法主推：勇士讓分盤 (-3.5)',
+                              'aiTrend': '日報主推：勇士讓分盤 (-3.5)',
                               'confidence': 85,
                               'detail': {
                                   'homeRecord': 'Net Rating +7.4',
@@ -121,15 +121,15 @@ jobs:
                                   'weatherIcon': 'fa-building',
                                   'temp': '20°C',
                                   'wind': '無風',
-                                  'tacticalAnalysis': '主隊在半場進攻戰術中的真實命中率（TS%）與底角三分投射頻率居聯盟頂尖。客隊核心內線防守悍將受踝關節傷勢影響，直接衝擊其禁區護框效率（Rim Protection Efficiency）與防守籃板率（DRB%）。',
-                                  'oddsMovement': '盤口開出後因大眾投注傾向（Public Money）導致讓分盤微幅上調，但職業博弈集團（Syndicates）依然維持穩定的買進支撐點。',
-                                  'injuries': '客隊核心先發大前鋒列為每日觀察名單（Game-Time Decision），出賽機率僅 50%。',
+                                  'tacticalAnalysis': '主隊真實命中率與底角三分投射頻率居聯盟頂尖。客隊核心內線防守悍將受傷勢影響，直接衝擊禁區護框效率與防守籃板率。',
+                                  'oddsMovement': '盤口開出後因大眾投注傾向導致讓分盤微幅上調，職業集團依然維持穩定的買進支撐點。',
+                                  'injuries': '客隊核心先發大前鋒列為每日觀察名單，出賽機率 50%。',
                                   'bettingOptions': [
                                       {'type': '讓分盤', 'selection': '勇士 -3.5', 'odds': '1.90', 'units': 1.5},
                                       {'type': '大小分', 'selection': '全場 224.5 大分', 'odds': '1.88', 'units': 1.0},
                                       {'type': '高效串關', 'selection': '勇士 -3.5 + 歐冠大分', 'odds': '3.20', 'units': 0.5}
                                   ],
-                                  'aiReason': '基於回合佔有率（Usage Rate）與空間拉開效率（Spacing Metrics），主隊外線火力預期將徹底撕裂客隊縮小防守（Drop Coverage）。'
+                                  'aiReason': '基於回合佔有率與空間拉開效率，主隊外線火力預期將撕裂客隊防守。'
                               }
                           }
                       ]
@@ -139,13 +139,13 @@ jobs:
                       'leagues': ['ATP 大滿貫'],
                       'matches': [
                           {
-                              'league': 'ATP',
+                              'league': '2026-09-30 ATP 專欄',
                               'time': '21:00',
                               'homeTeam': 'Alcaraz C.',
                               'awayTeam': 'Sinner J.',
                               'info': '接發球得分率與破發點轉化率極致碰撞',
                               'h2h': '硬地賽事 Elo 積分差 < 15 分',
-                              'aiTrend': '高階演算法主推：總局數 39.5 大局',
+                              'aiTrend': '日報主推：總局數 39.5 大局',
                               'confidence': 86,
                               'detail': {
                                   'homeRecord': '硬地 Elo: 2145',
@@ -155,14 +155,14 @@ jobs:
                                   'weatherIcon': 'fa-sun',
                                   'temp': '25°C',
                                   'wind': '微風 6 km/h',
-                                  'tacticalAnalysis': '雙方在底線相持回球拍數（Rally Length > 9 shots）的勝率幾近 50% 對等。發球局保發率（Hold Rate）皆高於 88%，破發點拯救率（Break Point Saved）在關鍵分展現極高抗壓矩陣。',
-                                  'oddsMovement': '勝負獨贏盤呈現完美的 1.90 均勢盤口，顯示市場定價效率（Market Efficiency）極高，資金分流均勻。',
-                                  'injuries': '雙方近期無任何疲勞累積與肌肉拉傷報告，身體熵值處於最佳狀態。',
+                                  'tacticalAnalysis': '雙方在底線相持回球拍數勝率對等。發球局保發率皆高於 88%，破發點拯救率在關鍵分展現極高抗壓矩陣。',
+                                  'oddsMovement': '勝負獨贏盤呈現完美的 1.90 均勢盤口，市場定價效率極高。',
+                                  'injuries': '雙方近期無疲勞累積與肌肉拉傷報告。',
                                   'bettingOptions': [
                                       {'type': '總局數大小盤', 'selection': '總局數 39.5 大局', 'odds': '1.85', 'units': 1.5},
                                       {'type': '局數讓分盤', 'selection': 'Alcaraz -1.5 局', 'odds': '1.90', 'units': 1.0}
                                   ],
-                                  'aiReason': '根據 Elo 評級系統與近期發球局決勝局（Tiebreak）勝率推導，本場極大機率至少出現一盤甚至兩盤搶七，總局數突破 39.5 具有顯著統計學優勢。'
+                                  'aiReason': '根據 Elo 評級系統與近期搶七勝率推導，本場極大機率至少出現一盤搶七，總局數突破 39.5 具有顯著統計學優勢。'
                               }
                           }
                       ]
@@ -179,5 +179,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add data.json
-          git commit -m "Auto update elite quant betting analytics" || exit 0
+          git commit -m "Auto update sports daily brief report for 2026-09-30" || exit 0
           git push
