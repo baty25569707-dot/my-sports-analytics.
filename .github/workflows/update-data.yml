@@ -30,172 +30,91 @@ jobs:
           data = {
               'updated_at': now_str,
               'categories': {
+                  'soccer': {
+                      'name': '足球',
+                      'leagues': ['歐冠', '英超', '西甲', '國家隊'],
+                      'matches': [
+                          {
+                              'league': '國家隊',
+                              'time': '20:00',
+                              'homeTeam': '捷克',
+                              'awayTeam': '英格蘭',
+                              'info': '歐國聯焦點戰 | 捷克主場攻勢兇猛 VS 英格蘭豪華鋒線',
+                              'h2h': '近 4 次交手 英格蘭 2 勝 1 和 1 敗 (平均總進球 3.2 顆)',
+                              'aiTrend': '主推：全場 2.5 大分 | 英格蘭讓分 (-1.0)',
+                              'confidence': 88,
+                              'detail': {
+                                  'homeRecord': '主場 4勝 1敗 (近5場大分率 100%)',
+                                  'awayRecord': '客場 3勝 2敗 (平均場均進球 2.2)',
+                                  'tacticalAnalysis': '英格蘭前場火力旺盛，近 5 場賽事平均創造 2.8 次絕佳進攻機會。然而客場作戰時兩翼壓上易留邊路空檔；捷克主場風格極具侵略性，近 5 場全數打出 2.5 球以上大分。',
+                                  'oddsMovement': '初盤開出英格蘭讓 1.0/1.5 球，後續資金流入讓分水位維持在 1.85 低水；大分 2.5 球水位由 1.95 調降至 1.80，大分較受市場資金青睞。',
+                                  'injuries': '英格蘭中場進行小幅輪換，鋒線主力全數登場；捷克防線主力中衛因累積黃牌停賽，後防抗壓性大打折扣。',
+                                  'bettingOptions': [
+                                      {'type': '讓分盤', 'selection': '英格蘭 -1.0', 'odds': '1.85', 'units': 1.5},
+                                      {'type': '大小分', 'selection': '全場 2.5 大分', 'odds': '1.80', 'units': 1.5},
+                                      {'type': '角球盤', 'selection': '全場角球 9.5 大', 'odds': '1.85', 'units': 0.5},
+                                      {'type': '串關組合', 'selection': '2.5大 + 巴西獨贏 (2關1)', 'odds': '2.61', 'units': 0.5}
+                                  ],
+                                  'aiReason': '結合兩隊近期高大分率與捷克防線停賽隱憂，單場大分與讓分盤極具投資價值；角球與串關採輕注配置以博取高賠率回報。'
+                              }
+                          }
+                      ]
+                  },
                   'baseball': {
                       'name': '棒球',
-                      'leagues': ['MLB', 'CPBL', 'NPB', 'KBO'],
+                      'leagues': ['MLB', 'CPBL', 'NPB'],
                       'matches': [
                           {
                               'league': 'MLB',
                               'time': '07:10',
                               'homeTeam': '洛杉磯道奇',
                               'awayTeam': '紐約洋基',
-                              'info': '山本由伸 (11-4, 2.65 ERA) VS Gerrit Cole (13-5, 3.10 ERA)',
-                              'h2h': '道奇近 10 場對戰 6 勝 4 敗 (主場對戰 4 勝 1 敗)',
-                              'aiTrend': '主推：道奇主勝 (-1.5) | 總分 8.5 大',
-                              'confidence': 88,
+                              'info': '山本由伸 (11-4, 2.65) VS Gerrit Cole (13-5, 3.10)',
+                              'h2h': '道奇近 10 場對戰 6 勝 4 敗',
+                              'aiTrend': '主推：道奇讓分 (-1.5) | 總分 8.5 大',
+                              'confidence': 86,
                               'detail': {
-                                  'homeRecord': '58勝 34敗 (主場 32勝 15敗)',
-                                  'awayRecord': '52勝 40敗 (客場 23勝 22敗)',
-                                  'venue': '道奇體育場 (Dodger Stadium)',
-                                  'weather': '晴朗',
-                                  'weatherIcon': 'fa-sun',
-                                  'temp': '23°C',
-                                  'wind': '微風 8 km/h (吹向外野)',
-                                  'odds': {
-                                      'spread': '道奇 -1.5 (1.90)',
-                                      'total': '8.5 大分 (1.85)',
-                                      'moneyline': '主 1.62 / 客 2.35'
-                                  },
-                                  'pitcherStats': {
-                                      'homeName': '山本由伸 (RHP)',
-                                      'awayName': 'Gerrit Cole (RHP)',
-                                      'homeEra': '2.65 / WHIP 1.05',
-                                      'awayEra': '3.10 / WHIP 1.12',
-                                      'homeWhip': '近 3 場防禦率 1.80',
-                                      'awayWhip': '近 3 場防禦率 3.85',
-                                      'homeK': '142 奪三振',
-                                      'awayK': '155 奪三振'
-                                  },
-                                  'recentForm': '道奇近 5 場 4 勝 1 敗 (平均得分 5.8)；洋基近 5 場 2 勝 3 敗 (牛棚 ERA 4.95)',
-                                  'injuries': '道奇：Mookie Betts (每日觀察)；洋基：牛棚中繼投手兩名掛傷號',
-                                  'keyStat': '道奇本季面對右投團隊 OPS 高達 .785，洋基牛棚近 3 場失分率偏高。',
-                                  'aiReason': '山本由伸主場制壓力強，近 3 場僅失 4 分；洋基近期的牛棚防禦率明顯下滑。加上風向吹向外野有利於長打發揮，看好道奇讓分過盤並開出大分。'
-                              }
-                          },
-                          {
-                              'league': 'CPBL',
-                              'time': '18:35',
-                              'homeTeam': '中信兄弟',
-                              'awayTeam': '統一獅',
-                              'info': '德保拉 (9-3, 2.90 ERA) VS 古林睿漾 (8-2, 2.15 ERA)',
-                              'h2h': '本季對戰 中信 5 勝 3 敗 (對戰防禦率 2.45)',
-                              'aiTrend': '主推：中信兄弟 不讓分勝',
-                              'confidence': 82,
-                              'detail': {
-                                  'homeRecord': '34勝 22敗',
-                                  'awayRecord': '31勝 25敗',
-                                  'venue': '台中洲際棒球場',
-                                  'weather': '多雲',
-                                  'weatherIcon': 'fa-cloud-sun',
-                                  'temp': '28°C',
-                                  'wind': '靜風 3 km/h',
-                                  'odds': {
-                                      'spread': '中信 -1.5 (2.10)',
-                                      'total': '7.5 小分 (1.80)',
-                                      'moneyline': '主 1.75 / 客 2.05'
-                                  },
-                                  'pitcherStats': {
-                                      'homeName': '德保拉 (LHP)',
-                                      'awayName': '古林睿漾 (RHP)',
-                                      'homeEra': '2.90 / WHIP 1.15',
-                                      'awayEra': '2.15 / WHIP 0.98',
-                                      'homeWhip': '對獅隊防禦率 2.10',
-                                      'awayWhip': '對兄弟防禦率 2.80',
-                                      'homeK': '98 奪三振',
-                                      'awayK': '110 奪三振'
-                                  },
-                                  'recentForm': '中信兄弟 3 連勝中；統一獅近 5 場 2 勝 3 敗',
-                                  'injuries': '雙方主力陣容健全，均正常出賽',
-                                  'keyStat': '德保拉在洲際主場對戰統一獅歷史勝率高達 72%。',
-                                  'aiReason': '兩位強投交手預計形成投手戰，中信兄弟近期後援投手群穩定度優於統一獅，看好中信主場小勝。'
+                                  'homeRecord': '主場 32勝 15敗',
+                                  'awayRecord': '客場 23勝 22敗',
+                                  'tacticalAnalysis': '山本由伸近 3 場先發防禦率僅 1.80，主場宰制力極強；洋基近期牛棚負擔過重，近 3 場後援防禦率上升至 4.95。',
+                                  'oddsMovement': '道奇獨贏水位從 1.70 降至 1.62，市場資金持續看好道奇主場取勝。',
+                                  'injuries': '道奇主力打線齊全；洋基牛棚兩名主力投手因傷缺陣。',
+                                  'bettingOptions': [
+                                      {'type': '讓分盤', 'selection': '道奇 -1.5', 'odds': '1.90', 'units': 1.5},
+                                      {'type': '大小分', 'selection': '全場 8.5 大分', 'odds': '1.85', 'units': 1.0},
+                                      {'type': '獨贏盤', 'selection': '道奇不讓分勝', 'odds': '1.62', 'units': 1.0},
+                                      {'type': '串關組合', 'selection': '道奇主勝 + 勇士獨贏', 'odds': '2.45', 'units': 0.5}
+                                  ],
+                                  'aiReason': '山本由伸先發穩健加上道奇主場強大打擊火力，過盤率極高。'
                               }
                           }
                       ]
                   },
                   'basketball': {
                       'name': '籃球',
-                      'leagues': ['NBA', 'TPBL', 'PLG'],
+                      'leagues': ['NBA', 'TPBL'],
                       'matches': [
                           {
                               'league': 'NBA',
                               'time': '08:30',
                               'homeTeam': '金州勇士',
                               'awayTeam': '洛杉磯湖人',
-                              'info': 'Curry (場均 28.5分) VS LeBron (場均 25.2分)',
+                              'info': 'Curry (場均28.5分) VS LeBron (場均25.2分)',
                               'h2h': '勇士近 5 次主場迎戰湖人 4 勝 1 敗',
                               'aiTrend': '主推：勇士 -3.5 | 總分 224.5 大',
                               'confidence': 85,
                               'detail': {
-                                  'homeRecord': '28勝 16敗 (主場 18勝 5敗)',
-                                  'awayRecord': '24勝 20敗 (客場 9勝 13敗)',
-                                  'venue': '大通中心 (Chase Center)',
-                                  'weather': '室內館',
-                                  'weatherIcon': 'fa-building',
-                                  'temp': '20°C',
-                                  'wind': '無風',
-                                  'odds': {
-                                      'spread': '勇士 -3.5 (1.90)',
-                                      'total': '224.5 大分 (1.88)',
-                                      'moneyline': '主 1.60 / 客 2.40'
-                                  },
-                                  'pitcherStats': {
-                                      'homeName': 'Stephen Curry',
-                                      'awayName': 'LeBron James',
-                                      'homeEra': '28.5 分 / 6.2 助攻',
-                                      'awayEra': '25.2 分 / 8.1 助攻',
-                                      'homeWhip': '三分命中率 41.5%',
-                                      'awayWhip': '投籃命中率 52.1%',
-                                      'homeK': '罰球 91.2%',
-                                      'awayK': '籃板 7.5 個'
-                                  },
-                                  'recentForm': '勇士主場 6 連勝 (場均 118.5分)；湖人客場 2 連敗',
-                                  'injuries': '湖人：Anthony Davis 腳踝發炎 (出賽成疑 50%)',
-                                  'keyStat': '勇士主場三分球場均命中 16.2 記，為聯盟第一。',
-                                  'aiReason': '湖人若 Davis 缺陣或帶傷上陣，禁區防禦將大幅受挫；勇士主場外線火力旺盛，看好勇士蓋過讓分盤。'
-                              }
-                          }
-                      ]
-                  },
-                  'soccer': {
-                      'name': '足球',
-                      'leagues': ['歐冠', '英超', '西甲'],
-                      'matches': [
-                          {
-                              'league': '歐冠',
-                              'time': '03:00',
-                              'homeTeam': '皇家馬德里',
-                              'awayTeam': '曼城',
-                              'info': 'Vinicius Jr. VS Erling Haaland',
-                              'h2h': '近 6 次歐冠交手 各 2 勝 2 和 2 敗',
-                              'aiTrend': '主推：雙方均有進球 (BTTS) | 2.5 大分',
-                              'confidence': 90,
-                              'detail': {
-                                  'homeRecord': '歐冠主場 4 勝 0 敗',
-                                  'awayRecord': '歐冠客場 3 勝 1 敗',
-                                  'venue': '伯納烏球場 (Santiago Bernabéu)',
-                                  'weather': '陰天局部陣雨',
-                                  'weatherIcon': 'fa-cloud-rain',
-                                  'temp': '15°C',
-                                  'wind': '12 km/h',
-                                  'odds': {
-                                      'spread': '平手盤 (PK)',
-                                      'total': '2.5 大分 (1.70)',
-                                      'moneyline': '主 2.50 / 和 3.40 / 客 2.60'
-                                  },
-                                  'pitcherStats': {
-                                      'homeName': 'Vinicius Jr.',
-                                      'awayName': 'Erling Haaland',
-                                      'homeEra': '本季 18 進球 9 助攻',
-                                      'awayEra': '本季 27 進球 4 助攻',
-                                      'homeWhip': '射門命中率 48%',
-                                      'awayWhip': '射門命中率 62%',
-                                      'homeK': '過人成功率 55%',
-                                      'awayK': '頭錘進球 6 顆'
-                                  },
-                                  'recentForm': '皇馬各項賽事 8 連不敗；曼城近 5 場全勝',
-                                  'injuries': '皇馬：Carvajal 黃牌停賽；曼城：De Bruyne 輕傷預計替補',
-                                  'keyStat': '兩隊過去 4 次對決總進球數均超過 3 球。',
-                                  'aiReason': '雙方鋒線火力極其兇猛，皇馬主場後防有主力停賽問題，曼城客場進攻把握度高，大分與雙進機率極高。'
+                                  'homeRecord': '主場 18勝 5敗',
+                                  'awayRecord': '客場 9勝 13敗',
+                                  'tacticalAnalysis': '勇士主場三分球場均命中 16.2 記為聯盟第一；湖人 Anthony Davis 腳踝有傷，禁區防守面臨大考驗。',
+                                  'oddsMovement': '讓分盤口從 -2.5 調高至 -3.5，資金向勇士傾斜。',
+                                  'injuries': '湖人 Anthony Davis 出賽成疑 (50%)。',
+                                  'bettingOptions': [
+                                      {'type': '讓分盤', 'selection': '勇士 -3.5', 'odds': '1.90', 'units': 1.5},
+                                      {'type': '大小分', 'selection': '全場 224.5 大', 'odds': '1.88', 'units': 1.0},
+                                      {'type': '串關組合', 'selection': '勇士-3.5 + 歐冠2.5大', 'odds': '3.20', 'units': 0.5}
+                                  ],
+                                  'aiReason': '勇士主場外線火力旺盛，若湖人禁區核心帶傷受限，勇士相當有機會蓋過讓分盤。'
                               }
                           }
                       ]
@@ -209,37 +128,21 @@ jobs:
                               'time': '21:00',
                               'homeTeam': 'Alcaraz C.',
                               'awayTeam': 'Sinner J.',
-                              'info': '世界排名 No.2 VS 世界排名 No.1',
+                              'info': '世界排名 No.2 VS No.1 頂尖決戰',
                               'h2h': '對戰生涯紀錄 Alcaraz 6 勝 4 敗',
                               'aiTrend': '主推：總局數 39.5 大分',
                               'confidence': 86,
                               'detail': {
                                   'homeRecord': '硬地戰績 32勝 6敗',
                                   'awayRecord': '硬地戰績 38勝 4敗',
-                                  'venue': '中央球場 (Center Court)',
-                                  'weather': '晴朗',
-                                  'weatherIcon': 'fa-sun',
-                                  'temp': '25°C',
-                                  'wind': '6 km/h',
-                                  'odds': {
-                                      'spread': 'Alcaraz -1.5 局',
-                                      'total': '39.5 大局 (1.85)',
-                                      'moneyline': '主 1.90 / 客 1.90'
-                                  },
-                                  'pitcherStats': {
-                                      'homeName': 'Carlos Alcaraz',
-                                      'awayName': 'Jannik Sinner',
-                                      'homeEra': '發球得分率 78%',
-                                      'awayEra': '發球得分率 81%',
-                                      'homeWhip': '破發點拯救率 68%',
-                                      'awayWhip': '破發點拯救率 72%',
-                                      'homeK': 'Aces 12.5 個/場',
-                                      'awayK': 'Aces 14.1 個/場'
-                                  },
-                                  'recentForm': '雙方均一盤未失挺進決賽',
-                                  'injuries': '無傷病，體能狀況最佳',
-                                  'keyStat': '過去 3 次在大滿貫交手皆打滿至少 4 盤。',
-                                  'aiReason': '頂尖雙雄對決，實力在伯仲之間，歷史對戰多次進入搶七與五盤大戰，相當看好開出大局數。'
+                                  'tacticalAnalysis': '雙方實力在伯仲之間，過去在大滿貫 3 次交手全數打滿至少 4 盤。',
+                                  'oddsMovement': '獨贏盤雙方均為 1.90 平手水位。',
+                                  'injuries': '雙方狀態良好無傷病。',
+                                  'bettingOptions': [
+                                      {'type': '大小分', 'selection': '總局數 39.5 大', 'odds': '1.85', 'units': 1.5},
+                                      {'type': '讓分盤', 'selection': 'Alcaraz -1.5局', 'odds': '1.90', 'units': 1.0}
+                                  ],
+                                  'aiReason': '頂尖對決極有可能再次打滿盤數，大局數為最佳投注選擇。'
                               }
                           }
                       ]
@@ -256,5 +159,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add data.json
-          git commit -m "Auto update enriched multi-sport analytics data" || exit 0
+          git commit -m "Auto update professional sports betting analytics" || exit 0
           git push
