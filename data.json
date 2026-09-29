@@ -211,3 +211,52 @@
         }
     }
 }
+{
+    "updated_at": "2026-09-30 05:05",
+    "categories": {
+        "basketball": {
+            "name": "籃球",
+            "leagues": ["NBA"],
+            "matches": [
+                {
+                    "league": "2026-09-30 NBA 專欄",
+                    "time": "10:00",
+                    "homeTeam": "金州勇士",
+                    "awayTeam": "洛杉磯湖人",
+                    "info": "西區頂級宿敵交鋒 | 勇士三分外線高效壓制",
+                    "h2h": "近 5 次交手勇士贏下 4 場",
+                    "aiTrend": "日報主推：勇士讓分盤 (-3.5)",
+                    "confidence": 85,
+                    "matchStatus": "已完賽 (Finished)",
+                    "finalScore": "金州勇士 112 : 105 洛杉磯湖人",
+                    "betResult": {
+                        "selection": "勇士 -3.5 (1.90)",
+                        "outcome": "WIN",
+                        "profit": "+ NT$ 405"
+                    },
+                    "detail": {
+                        "homeRecord": "Net Rating +7.4",
+                        "awayRecord": "Net Rating +1.2",
+                        "venue": "大通中心 (Chase Center)",
+                        "weather": "室內恆溫無風微環境",
+                        "weatherIcon": "fa-cloud-sun",
+                        "temp": "20°C",
+                        "wind": "無風",
+                        "tacticalAnalysis": "主隊真實命中率與底角三分投射頻率居聯盟頂尖，成功在第四節拉開分差。",
+                        "oddsMovement": "盤口開出後讓分盤微幅上調，專業資金高度看好勇士。",
+                        "injuries": "客隊核心先發出賽機率 50%。",
+                        "bettingOptions": [
+                            {"type": "讓分盤", "selection": "勇士 -3.5", "odds": "1.90", "units": 1.5}
+                        ],
+                        "aiReason": "主隊外線火力持續壓制，順利打穿讓分盤。"
+                    }
+                }
+            ]
+        },
+        "soccer": {
+            "name": "足球",
+            "leagues": ["歐國聯"],
+            "matches": []
+        }
+    }
+}
