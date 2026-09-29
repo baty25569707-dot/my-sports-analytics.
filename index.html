@@ -3,117 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SportX 全球智彩分析</title>
+    <title>SportX 智彩數據分析站</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #0b132b; color: #f4f4f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .tab-btn { transition: all 0.3s ease; }
+        .tab-btn.active { background-color: #1c2541; color: #48cae4; border-bottom: 3px solid #48cae4; font-weight: bold; }
+        .card-hover { transition: all 0.25s ease; cursor: pointer; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(72, 202, 228, 0.25); border-color: #48cae4; }
+        .modal-backdrop { background-color: rgba(11, 19, 43, 0.85); backdrop-filter: blur(4px); }
+    </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen pb-12">
+<body class="min-h-screen flex flex-col">
 
-    <!-- 頂部導覽列 -->
-    <nav class="bg-slate-800 border-b border-slate-700 sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <i class="fa-solid fa-chart-line text-blue-500 text-2xl"></i>
-                <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">SportX 智彩數據分析站</span>
+    <!-- Header / 頂部選單 -->
+    <header class="bg-[#1c2541] border-b border-slate-700 py-4 px-6 sticky top-0 z-40 shadow-lg">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-chart-line text-[#48cae4] text-2xl"></i>
+                <h1 class="text-xl font-bold tracking-wide bg-gradient-to-r from-white via-cyan-200 to-[#48cae4] bg-clip-text text-transparent">
+                    SportX 智彩數據分析站
+                </h1>
             </div>
-            <span id="update-time" class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i>最後更新：載入中...</span>
+            <div class="flex items-center gap-4 text-xs">
+                <div id="update-time" class="text-slate-400 flex items-center gap-1.5">
+                    <i class="fa-regular fa-clock"></i> 載入中...
+                </div>
+                <!-- 5分鐘倒數計時器 -->
+                <div class="bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 px-3 py-1 rounded-full flex items-center gap-1.5 font-mono">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                    </span>
+                    自動更新倒數: <span id="countdown" class="font-bold text-white">05:00</span>
+                </div>
+            </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- 主體內容 -->
-    <main class="max-w-7xl mx-auto px-4 pt-6">
-        <!-- 體育項目切換頁籤 -->
-        <div class="flex space-x-2 border-b border-slate-700 pb-3 mb-6 overflow-x-auto" id="category-tabs">
-            <button onclick="switchCategory('baseball')" id="tab-baseball" class="tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-blue-600 text-white flex items-center gap-2">
-                <i class="fa-solid fa-baseball"></i> 棒球 (MLB/CPBL/NPB/KBO)
-            </button>
-            <button onclick="switchCategory('basketball')" id="tab-basketball" class="tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-800 text-slate-400 hover:bg-slate-700 flex items-center gap-2">
-                <i class="fa-solid fa-basketball"></i> 籃球 (NBA/TPBL/PLG)
-            </button>
-            <button onclick="switchCategory('soccer')" id="tab-soccer" class="tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-800 text-slate-400 hover:bg-slate-700 flex items-center gap-2">
-                <i class="fa-solid fa-futbol"></i> 足球 (五大聯賽/歐冠)
-            </button>
-            <button onclick="switchCategory('tennis')" id="tab-tennis" class="tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-800 text-slate-400 hover:bg-slate-700 flex items-center gap-2">
-                <i class="fa-solid fa-baseball-bat-ball"></i> 網球 (ATP/WTA)
-            </button>
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 space-y-6">
+
+        <!-- 體育項目分頁卡 -->
+        <div class="flex border-b border-slate-700/80 overflow-x-auto gap-2 pb-2 scrollbar-none" id="tab-container"></div>
+
+        <!-- 賽事卡片列表 -->
+        <div id="matches-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5">
+            <div class="col-span-full text-center py-20 text-slate-400">
+                <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3 text-[#48cae4]"></i>
+                <p>正在加載數據分析...</p>
+            </div>
         </div>
 
-        <!-- 賽事卡片展示區 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="matches-container">
-            <!-- 動態渲染卡片 -->
-        </div>
     </main>
 
-    <script>
-        let globalData = null;
+    <!-- 詳細分析彈窗 (Modal) -->
+    <div id="detail-modal" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-4">
+        <div class="bg-[#1c2541] border border-slate-700 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl p-2 rounded-full hover:bg-slate-700/50 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modal-body" class="p-6 space-y-6"></div>
+        </div>
+    </div>
 
-        async function loadData() {
+    <!-- Footer -->
+    <footer class="bg-[#1c2541] border-t border-slate-800 text-center py-4 text-xs text-slate-500">
+        SportX Analytics © 2026 | 自動即時數據同步中 | 免責聲明：本站數據僅供體育愛好者統計分析參考。
+    </footer>
+
+    <script>
+        let sportsData = null;
+        let currentCategory = 'baseball';
+        const UPDATE_INTERVAL_SEC = 300; // 300 秒 = 5 分鐘
+        let countdownSec = UPDATE_INTERVAL_SEC;
+
+        async function init() {
+            await fetchMatchesData();
+            startCountdown();
+        }
+
+        async function fetchMatchesData() {
             try {
-                const res = await fetch('./data.json?t=' + new Date().getTime());
-                globalData = await res.json();
-                
-                document.getElementById('update-time').innerHTML = `<i class="fa-regular fa-clock mr-1"></i>最後更新：${globalData.updated_at}`;
-                renderCategory('baseball');
+                // 加入時間戳記避免瀏覽器快取舊資料
+                const response = await fetch('data.json?t=' + new Date().getTime());
+                sportsData = await response.json();
+                document.getElementById('update-time').innerHTML = `<i class="fa-regular fa-clock"></i> 最後更新：${sportsData.updated_at}`;
+                renderTabs();
+                renderMatches(currentCategory);
             } catch (err) {
-                console.error("無法載入賽事資料:", err);
+                document.getElementById('matches-grid').innerHTML = `
+                    <div class="col-span-full text-center py-20 text-red-400">
+                        <i class="fa-solid fa-triangle-exclamation text-3xl mb-2"></i>
+                        <p>數據讀取失敗，請確認 data.json 檔案格式。</p>
+                    </div>`;
             }
+        }
+
+        function startCountdown() {
+            setInterval(() => {
+                countdownSec--;
+                if (countdownSec <= 0) {
+                    countdownSec = UPDATE_INTERVAL_SEC;
+                    fetchMatchesData(); // 5分鐘時間到，自動重新向伺服器請求最新 data.json
+                }
+                const min = String(Math.floor(countdownSec / 60)).padStart(2, '0');
+                const sec = String(countdownSec % 60).padStart(2, '0');
+                document.getElementById('countdown').innerText = `${min}:${sec}`;
+            }, 1000);
+        }
+
+        function renderTabs() {
+            const tabContainer = document.getElementById('tab-container');
+            const categories = sportsData.categories;
+            const iconMap = {
+                baseball: 'fa-baseball-bat-ball',
+                basketball: 'fa-basketball-ball',
+                soccer: 'fa-futbol',
+                tennis: 'fa-table-tennis-paddle-ball'
+            };
+
+            tabContainer.innerHTML = Object.keys(categories).map(catKey => {
+                const cat = categories[catKey];
+                const icon = iconMap[catKey] || 'fa-trophy';
+                const isActive = catKey === currentCategory ? 'active' : '';
+                return `
+                    <button onclick="switchCategory('${catKey}')" class="tab-btn ${isActive} px-5 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 whitespace-nowrap bg-[#0b132b]/60 border border-slate-700/50 hover:bg-[#1c2541]">
+                        <i class="fa-solid ${icon}"></i>
+                        ${cat.name} (${cat.leagues.join('/')})
+                    </button>`;
+            }).join('');
         }
 
         function switchCategory(catKey) {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.className = "tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-800 text-slate-400 hover:bg-slate-700 flex items-center gap-2";
-            });
-            
-            const activeBtn = document.getElementById(`tab-${catKey}`);
-            if(activeBtn) {
-                activeBtn.className = "tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-blue-600 text-white flex items-center gap-2";
-            }
-
-            renderCategory(catKey);
+            currentCategory = catKey;
+            renderTabs();
+            renderMatches(catKey);
         }
 
-        function renderCategory(catKey) {
-            if (!globalData || !globalData.categories || !globalData.categories[catKey]) {
-                document.getElementById('matches-container').innerHTML = `<div class="col-span-full text-center text-slate-500 py-12">資料載入中，請稍後...</div>`;
+        function renderMatches(catKey) {
+            const matchesGrid = document.getElementById('matches-grid');
+            const category = sportsData.categories[catKey];
+
+            if (!category || !category.matches || category.matches.length === 0) {
+                matchesGrid.innerHTML = `<div class="col-span-full text-center py-16 text-slate-400">今日暫無賽事數據</div>`;
                 return;
             }
 
-            const category = globalData.categories[catKey];
-            const container = document.getElementById('matches-container');
-            container.innerHTML = '';
+            matchesGrid.innerHTML = category.matches.map((m, idx) => `
+                <div onclick="openModal('${catKey}', ${idx})" class="card-hover bg-[#1c2541]/80 border border-slate-700/70 rounded-2xl p-5 shadow-lg relative flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="bg-cyan-500/10 text-cyan-400 text-xs px-2.5 py-1 rounded-md font-bold tracking-wide border border-cyan-500/20">${m.league}</span>
+                            <span class="text-xs text-slate-400 font-mono"><i class="fa-regular fa-clock mr-1"></i>${m.time}</span>
+                        </div>
 
-            if (!category.matches || category.matches.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center text-slate-500 py-12">今日暫無 ${category.name} 賽事分析數據</div>`;
-                return;
-            }
+                        <div class="grid grid-cols-7 items-center my-4 text-center">
+                            <div class="col-span-3">
+                                <div class="text-xs text-slate-400 mb-1">主隊</div>
+                                <div class="font-bold text-base text-slate-100">${m.homeTeam}</div>
+                            </div>
+                            <div class="col-span-1 font-bold text-xs text-cyan-400/80 bg-cyan-950/50 rounded-full py-1">VS</div>
+                            <div class="col-span-3">
+                                <div class="text-xs text-slate-400 mb-1">客隊</div>
+                                <div class="font-bold text-base text-slate-100">${m.awayTeam}</div>
+                            </div>
+                        </div>
 
-            category.matches.forEach(m => {
-                const card = `
-                    <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 hover:border-blue-500 transition shadow-lg">
-                        <div class="flex justify-between items-center mb-3 text-xs text-slate-400">
-                            <span class="px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-400 font-bold border border-blue-500/20">${m.league}</span>
-                            <span class="font-mono">${m.time}</span>
-                        </div>
-                        <div class="flex justify-between items-center my-4 text-base font-bold">
-                            <div class="w-2/5 text-left">${m.homeTeam}</div>
-                            <div class="text-xs text-amber-400 bg-amber-500/10 px-2 py-1 rounded-md font-mono">VS</div>
-                            <div class="w-2/5 text-right">${m.awayTeam}</div>
-                        </div>
-                        <div class="text-xs text-slate-300 bg-slate-900/60 p-2.5 rounded-lg mb-3 leading-relaxed">
-                            📌 ${m.info}<br>
-                            📊 ${m.h2h}
-                        </div>
-                        <div class="border-t border-slate-700/80 pt-3 flex justify-between items-center text-xs">
-                            <span class="text-emerald-400 font-bold">🎯 ${m.aiTrend}</span>
-                            <span class="text-slate-400 bg-slate-700 px-2 py-0.5 rounded">信心度 ${m.confidence}%</span>
+                        <div class="bg-[#0b132b]/80 rounded-xl p-3 text-xs space-y-1.5 border border-slate-800 my-3">
+                            <div class="text-slate-300"><i class="fa-solid fa-thumbtack text-rose-400 mr-2"></i>${m.info}</div>
+                            <div class="text-slate-400"><i class="fa-solid fa-chart-simple text-emerald-400 mr-2"></i>${m.h2h}</div>
                         </div>
                     </div>
-                `;
-                container.innerHTML += card;
-            });
+
+                    <div class="flex items-center justify-between pt-3 border-t border-slate-800 text-xs">
+                        <div class="text-cyan-300 font-semibold flex items-center gap-1.5">
+                            <i class="fa-solid fa-bullseye text-rose-400"></i>
+                            ${m.aiTrend}
+                        </div>
+                        <div class="bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 px-2.5 py-1 rounded-full font-mono text-[11px]">
+                            信心度 ${m.confidence}%
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        document.addEventListener('DOMContentLoaded', loadData);
+        // 點擊框框打開詳細數據彈窗
+        function openModal(catKey, matchIndex) {
+            const m = sportsData.categories[catKey].matches[matchIndex];
+            const detail = m.detail || {};
+
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = `
+                <div class="border-b border-slate-700/80 pb-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-cyan-500/20 text-cyan-300 text-xs px-3 py-1 rounded-md font-bold border border-cyan-500/30">${m.league}</span>
+                        <span class="text-xs text-slate-400 font-mono"><i class="fa-regular fa-clock mr-1"></i>${m.time} 開賽</span>
+                    </div>
+                    <div class="grid grid-cols-7 items-center text-center py-3">
+                        <div class="col-span-3">
+                            <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded">主場</span>
+                            <h2 class="text-xl font-bold text-slate-100 mt-1">${m.homeTeam}</h2>
+                        </div>
+                        <div class="col-span-1 font-bold text-lg text-cyan-400">VS</div>
+                        <div class="col-span-3">
+                            <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded">客場</span>
+                            <h2 class="text-xl font-bold text-slate-100 mt-1">${m.awayTeam}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-[#0b132b]/80 border border-slate-700/60 rounded-xl p-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-lg">
+                            <i class="fa-solid ${detail.weatherIcon || 'fa-cloud-sun'}"></i>
+                        </div>
+                        <div>
+                            <div class="text-slate-400">比賽場地與氣候</div>
+                            <div class="font-semibold text-slate-200 mt-0.5">${detail.venue || '官方球場'} | ${detail.weather || '晴朗'}</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-lg">
+                            <i class="fa-solid fa-temperature-half"></i>
+                        </div>
+                        <div>
+                            <div class="text-slate-400">即時溫度與風速</div>
+                            <div class="font-semibold text-slate-200 mt-0.5">${detail.temp || '24°C'} | ${detail.wind || '5 km/h'}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-cyan-400"></i> 主客場與戰力分析
+                    </h3>
+                    <div class="bg-[#0b132b]/60 rounded-xl p-4 text-xs space-y-2 text-slate-300 border border-slate-800">
+                        <p><strong class="text-cyan-300">先發/關鍵陣容：</strong> ${m.info}</p>
+                        <p><strong class="text-cyan-300">歷史對戰紀錄：</strong> ${m.h2h}</p>
+                        <p><strong class="text-cyan-300">主客場近況：</strong> ${detail.recentForm || '雙方近期狀態穩定'}</p>
+                        <p><strong class="text-cyan-300">傷兵報告：</strong> ${detail.injuries || '目前無重大傷兵報告'}</p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-cyan-950/40 to-blue-950/40 border border-cyan-500/30 rounded-xl p-4 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-cyan-300 flex items-center gap-2">
+                            <i class="fa-solid fa-robot"></i> AI 智彩完整分析理由
+                        </span>
+                        <span class="bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-xs px-3 py-0.5 rounded-full font-mono">
+                            信心度 ${m.confidence}%
+                        </span>
+                    </div>
+                    <div class="text-sm font-bold text-white pt-1">${m.aiTrend}</div>
+                    <p class="text-xs text-slate-400 leading-relaxed pt-1">
+                        ${detail.aiReason || '綜合評估雙方主客場勝率、近況戰績及天候環境因素。'}
+                    </p>
+                </div>
+            `;
+
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('detail-modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        init();
     </script>
 </body>
 </html>
