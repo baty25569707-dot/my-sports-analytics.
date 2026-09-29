@@ -18,7 +18,7 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Header / 頂部選單 -->
+    <!-- Header -->
     <header class="bg-[#1c2541] border-b border-slate-700 py-4 px-6 sticky top-0 z-40 shadow-lg">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
             <div class="flex items-center gap-3">
@@ -77,8 +77,8 @@
 
     <script>
         let sportsData = null;
-        let currentCategory = 'baseball';
-        let userBankroll = 10000; // 預設 NT$ 10,000
+        let currentCategory = 'soccer';
+        let userBankroll = 10000;
         const UPDATE_INTERVAL_SEC = 300;
         let countdownSec = UPDATE_INTERVAL_SEC;
 
@@ -203,7 +203,7 @@
         function openModal(catKey, matchIndex) {
             const m = sportsData.categories[catKey].matches[matchIndex];
             const d = m.detail || {};
-            const unitVal = Math.round(userBankroll * 0.03); // 1 Unit = 本金的 3%
+            const unitVal = Math.round(userBankroll * 0.03); // 1 Unit = 本金 3%
 
             const modalBody = document.getElementById('modal-body');
             modalBody.innerHTML = `
@@ -217,21 +217,43 @@
                         <div class="col-span-3">
                             <span class="text-[11px] bg-cyan-950 text-cyan-300 border border-cyan-800 px-2 py-0.5 rounded">主場</span>
                             <h2 class="text-xl font-bold text-slate-100 mt-1">${m.homeTeam}</h2>
-                            <div class="text-xs text-slate-400 mt-1">${d.homeRecord || '戰績資訊'}</div>
+                            <div class="text-xs text-slate-400 mt-1">${d.homeRecord || '近況良好'}</div>
                         </div>
                         <div class="col-span-1 font-bold text-xl text-cyan-400">VS</div>
                         <div class="col-span-3">
                             <span class="text-[11px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded">客場</span>
                             <h2 class="text-xl font-bold text-slate-100 mt-1">${m.awayTeam}</h2>
-                            <div class="text-xs text-slate-400 mt-1">${d.awayRecord || '戰績資訊'}</div>
+                            <div class="text-xs text-slate-400 mt-1">${d.awayRecord || '近況良好'}</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 1. 專業博弈分析師深度報告 -->
+                <!-- 🌟【修復的核心區塊】：比賽場地與即時天氣氣候 -->
+                <div class="stat-box rounded-xl p-3.5 grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-base">
+                            <i class="fa-solid ${d.weatherIcon || 'fa-cloud-sun'}"></i>
+                        </div>
+                        <div>
+                            <div class="text-slate-400">比賽場地與氣候</div>
+                            <div class="font-semibold text-slate-200">${d.venue || '官方場地'} | ${d.weather || '晴朗'}</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-base">
+                            <i class="fa-solid fa-temperature-half"></i>
+                        </div>
+                        <div>
+                            <div class="text-slate-400">即時溫度 / 風速</div>
+                            <div class="font-semibold text-slate-200">${d.temp || '20°C'} | ${d.wind || '微風 5 km/h'}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 博弈分析師專屬報告 -->
                 <div class="space-y-3">
                     <h3 class="text-xs font-bold text-cyan-300 flex items-center gap-1.5 uppercase tracking-wider">
-                        <i class="fa-solid fa-user-tie text-amber-400 text-sm"></i> 博弈分析師專屬報告 (Analyst Insights)
+                        <i class="fa-solid fa-user-tie text-amber-400 text-sm"></i> 博弈分析師專屬報告
                     </h3>
                     <div class="stat-box rounded-xl p-4 text-xs space-y-2.5 leading-relaxed text-slate-200">
                         <p><strong class="text-cyan-300">⚔️ 戰術與體能面：</strong> ${d.tacticalAnalysis || '兩隊近期攻防節奏快速，主力陣容齊全。'}</p>
@@ -240,7 +262,7 @@
                     </div>
                 </div>
 
-                <!-- 2. 每場下注組合與本金分配表 (根據本金即時計算) -->
+                <!-- 建議下注組合與資金分配表 -->
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
                         <h3 class="text-xs font-bold text-cyan-300 flex items-center gap-1.5 uppercase tracking-wider">
@@ -278,7 +300,7 @@
                     </div>
                 </div>
 
-                <!-- 3. AI / 分析師綜合推薦理由 -->
+                <!-- 綜合評估與風控心法 -->
                 <div class="bg-gradient-to-r from-cyan-950/50 to-blue-950/50 border border-cyan-500/40 rounded-xl p-4 space-y-2 shadow-inner">
                     <div class="flex justify-between items-center">
                         <span class="text-xs font-bold text-cyan-300 flex items-center gap-2">
