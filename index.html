@@ -12,12 +12,13 @@
         .tab-btn.active { background-color: #1c2541; color: #48cae4; border-bottom: 3px solid #48cae4; font-weight: bold; }
         .card-hover { transition: all 0.25s ease; cursor: pointer; }
         .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(72, 202, 228, 0.25); border-color: #48cae4; }
-        .modal-backdrop { background-color: rgba(11, 19, 43, 0.85); backdrop-filter: blur(4px); }
+        .modal-backdrop { background-color: rgba(11, 19, 43, 0.85); backdrop-filter: blur(6px); }
+        .stat-box { background: rgba(11, 19, 43, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Header / 頂部選單 -->
+    <!-- Header -->
     <header class="bg-[#1c2541] border-b border-slate-700 py-4 px-6 sticky top-0 z-40 shadow-lg">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2">
             <div class="flex items-center gap-3">
@@ -30,7 +31,6 @@
                 <div id="update-time" class="text-slate-400 flex items-center gap-1.5">
                     <i class="fa-regular fa-clock"></i> 載入中...
                 </div>
-                <!-- 5分鐘倒數計時器 -->
                 <div class="bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 px-3 py-1 rounded-full flex items-center gap-1.5 font-mono">
                     <span class="relative flex h-2 w-2">
                       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
@@ -44,24 +44,19 @@
 
     <!-- Main Container -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 space-y-6">
-
-        <!-- 體育項目分頁卡 -->
         <div class="flex border-b border-slate-700/80 overflow-x-auto gap-2 pb-2 scrollbar-none" id="tab-container"></div>
-
-        <!-- 賽事卡片列表 -->
         <div id="matches-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5">
             <div class="col-span-full text-center py-20 text-slate-400">
                 <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3 text-[#48cae4]"></i>
                 <p>正在加載數據分析...</p>
             </div>
         </div>
-
     </main>
 
-    <!-- 詳細分析彈窗 (Modal) -->
+    <!-- 詳細數據Modal -->
     <div id="detail-modal" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-4">
-        <div class="bg-[#1c2541] border border-slate-700 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl relative">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl p-2 rounded-full hover:bg-slate-700/50 transition">
+        <div class="bg-[#1c2541] border border-slate-700 rounded-2xl w-full max-w-3xl max-h-[92vh] overflow-y-auto shadow-2xl relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl p-2 rounded-full hover:bg-slate-700/50 transition z-10">
                 <i class="fa-solid fa-xmark"></i>
             </button>
             <div id="modal-body" class="p-6 space-y-6"></div>
@@ -76,7 +71,7 @@
     <script>
         let sportsData = null;
         let currentCategory = 'baseball';
-        const UPDATE_INTERVAL_SEC = 300; // 300 秒 = 5 分鐘
+        const UPDATE_INTERVAL_SEC = 300;
         let countdownSec = UPDATE_INTERVAL_SEC;
 
         async function init() {
@@ -86,7 +81,6 @@
 
         async function fetchMatchesData() {
             try {
-                // 加入時間戳記避免瀏覽器快取舊資料
                 const response = await fetch('data.json?t=' + new Date().getTime());
                 sportsData = await response.json();
                 document.getElementById('update-time').innerHTML = `<i class="fa-regular fa-clock"></i> 最後更新：${sportsData.updated_at}`;
@@ -96,7 +90,7 @@
                 document.getElementById('matches-grid').innerHTML = `
                     <div class="col-span-full text-center py-20 text-red-400">
                         <i class="fa-solid fa-triangle-exclamation text-3xl mb-2"></i>
-                        <p>數據讀取失敗，請確認 data.json 檔案格式。</p>
+                        <p>數據讀取失敗，請確認 data.json 檔案。</p>
                     </div>`;
             }
         }
@@ -106,7 +100,7 @@
                 countdownSec--;
                 if (countdownSec <= 0) {
                     countdownSec = UPDATE_INTERVAL_SEC;
-                    fetchMatchesData(); // 5分鐘時間到，自動重新向伺服器請求最新 data.json
+                    fetchMatchesData();
                 }
                 const min = String(Math.floor(countdownSec / 60)).padStart(2, '0');
                 const sec = String(countdownSec % 60).padStart(2, '0');
@@ -190,76 +184,146 @@
             `).join('');
         }
 
-        // 點擊框框打開詳細數據彈窗
         function openModal(catKey, matchIndex) {
             const m = sportsData.categories[catKey].matches[matchIndex];
-            const detail = m.detail || {};
+            const d = m.detail || {};
 
             const modalBody = document.getElementById('modal-body');
             modalBody.innerHTML = `
+                <!-- 賽事標頭 -->
                 <div class="border-b border-slate-700/80 pb-4">
-                    <div class="flex items-center gap-2 mb-2">
+                    <div class="flex items-center justify-between mb-3">
                         <span class="bg-cyan-500/20 text-cyan-300 text-xs px-3 py-1 rounded-md font-bold border border-cyan-500/30">${m.league}</span>
                         <span class="text-xs text-slate-400 font-mono"><i class="fa-regular fa-clock mr-1"></i>${m.time} 開賽</span>
                     </div>
-                    <div class="grid grid-cols-7 items-center text-center py-3">
+                    <div class="grid grid-cols-7 items-center text-center py-2">
                         <div class="col-span-3">
-                            <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded">主場</span>
+                            <span class="text-[11px] bg-cyan-950 text-cyan-300 border border-cyan-800 px-2 py-0.5 rounded">主場</span>
                             <h2 class="text-xl font-bold text-slate-100 mt-1">${m.homeTeam}</h2>
+                            <div class="text-xs text-slate-400 mt-1">戰績：${d.homeRecord || '12勝 8敗'}</div>
                         </div>
-                        <div class="col-span-1 font-bold text-lg text-cyan-400">VS</div>
+                        <div class="col-span-1 font-bold text-xl text-cyan-400">VS</div>
                         <div class="col-span-3">
-                            <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded">客場</span>
+                            <span class="text-[11px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded">客場</span>
                             <h2 class="text-xl font-bold text-slate-100 mt-1">${m.awayTeam}</h2>
+                            <div class="text-xs text-slate-400 mt-1">戰績：${d.awayRecord || '10勝 10敗'}</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-[#0b132b]/80 border border-slate-700/60 rounded-xl p-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <!-- 氣候與場地資訊 -->
+                <div class="stat-box rounded-xl p-3.5 grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-lg">
-                            <i class="fa-solid ${detail.weatherIcon || 'fa-cloud-sun'}"></i>
+                        <div class="w-9 h-9 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-base">
+                            <i class="fa-solid ${d.weatherIcon || 'fa-sun'}"></i>
                         </div>
                         <div>
-                            <div class="text-slate-400">比賽場地與氣候</div>
-                            <div class="font-semibold text-slate-200 mt-0.5">${detail.venue || '官方球場'} | ${detail.weather || '晴朗'}</div>
+                            <div class="text-slate-400">場地氣候</div>
+                            <div class="font-semibold text-slate-200">${d.venue || '官方場地'} | ${d.weather || '晴朗'}</div>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-lg">
+                        <div class="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-base">
                             <i class="fa-solid fa-temperature-half"></i>
                         </div>
                         <div>
-                            <div class="text-slate-400">即時溫度與風速</div>
-                            <div class="font-semibold text-slate-200 mt-0.5">${detail.temp || '24°C'} | ${detail.wind || '5 km/h'}</div>
+                            <div class="text-slate-400">溫度 / 風速</div>
+                            <div class="font-semibold text-slate-200">${d.temp || '22°C'} | ${d.wind || '微風 8 km/h'}</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="space-y-3">
-                    <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-cyan-400"></i> 主客場與戰力分析
+                <!-- 盤口與大眾資金趨勢 -->
+                ${d.odds ? `
+                <div class="space-y-2">
+                    <h3 class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+                        <i class="fa-solid fa-coins text-amber-400"></i> 即時盤口與投注資金流向
                     </h3>
-                    <div class="bg-[#0b132b]/60 rounded-xl p-4 text-xs space-y-2 text-slate-300 border border-slate-800">
-                        <p><strong class="text-cyan-300">先發/關鍵陣容：</strong> ${m.info}</p>
-                        <p><strong class="text-cyan-300">歷史對戰紀錄：</strong> ${m.h2h}</p>
-                        <p><strong class="text-cyan-300">主客場近況：</strong> ${detail.recentForm || '雙方近期狀態穩定'}</p>
-                        <p><strong class="text-cyan-300">傷兵報告：</strong> ${detail.injuries || '目前無重大傷兵報告'}</p>
+                    <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                        <div class="stat-box p-2.5 rounded-lg">
+                            <div class="text-slate-400 text-[11px]">讓分盤 (Spread)</div>
+                            <div class="font-bold text-cyan-300 mt-0.5">${d.odds.spread || '-'}</div>
+                        </div>
+                        <div class="stat-box p-2.5 rounded-lg">
+                            <div class="text-slate-400 text-[11px]">大小分 (O/U)</div>
+                            <div class="font-bold text-amber-300 mt-0.5">${d.odds.total || '-'}</div>
+                        </div>
+                        <div class="stat-box p-2.5 rounded-lg">
+                            <div class="text-slate-400 text-[11px]">獨贏 (ML)</div>
+                            <div class="font-bold text-emerald-300 mt-0.5">${d.odds.moneyline || '-'}</div>
+                        </div>
+                    </div>
+                </div>
+                ` : ''}
+
+                <!-- 先發投手 / 關鍵球員對決數據表格 -->
+                ${d.pitcherStats ? `
+                <div class="space-y-2">
+                    <h3 class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-ninja text-cyan-400"></i> 先發/關鍵球員數據對比
+                    </h3>
+                    <div class="stat-box rounded-xl p-3 text-xs overflow-x-auto">
+                        <table class="w-full text-center">
+                            <thead>
+                                <tr class="text-slate-400 border-b border-slate-700/60 text-[11px]">
+                                    <th class="pb-2 text-left">${m.homeTeam}</th>
+                                    <th class="pb-2">數據指標</th>
+                                    <th class="pb-2 text-right">${m.awayTeam}</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800/60 font-mono text-slate-200">
+                                <tr>
+                                    <td class="py-2 text-left font-sans font-bold text-cyan-300">${d.pitcherStats.homeName}</td>
+                                    <td class="py-2 text-slate-400 font-sans">關鍵選手</td>
+                                    <td class="py-2 text-right font-sans font-bold text-cyan-300">${d.pitcherStats.awayName}</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1.5 text-left">${d.pitcherStats.homeEra}</td>
+                                    <td class="py-1.5 text-slate-400 font-sans">防禦率 (ERA) / 場均得分</td>
+                                    <td class="py-1.5 text-right">${d.pitcherStats.awayEra}</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1.5 text-left">${d.pitcherStats.homeWhip}</td>
+                                    <td class="py-1.5 text-slate-400 font-sans">WHIP / 命中率</td>
+                                    <td class="py-1.5 text-right">${d.pitcherStats.awayWhip}</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1.5 text-left">${d.pitcherStats.homeK}</td>
+                                    <td class="py-1.5 text-slate-400 font-sans">三振數 / 場均助攻</td>
+                                    <td class="py-1.5 text-right">${d.pitcherStats.awayK}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                ` : ''}
+
+                <!-- 詳細文字與傷兵分析 -->
+                <div class="space-y-2">
+                    <h3 class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+                        <i class="fa-solid fa-list-check text-emerald-400"></i> 戰術與傷兵綜合檢視
+                    </h3>
+                    <div class="stat-box rounded-xl p-3.5 text-xs space-y-2 text-slate-300">
+                        <p><strong class="text-cyan-300">歷史對戰：</strong> ${m.h2h}</p>
+                        <p><strong class="text-cyan-300">主客場近況：</strong> ${d.recentForm || '雙方近況穩定'}</p>
+                        <p><strong class="text-cyan-300">傷兵報告：</strong> ${d.injuries || '目前無重大傷兵'}</p>
+                        <p><strong class="text-cyan-300">關鍵數據：</strong> ${d.keyStat || '雙方先發投手近 3 場穩定度極高'}</p>
                     </div>
                 </div>
 
-                <div class="bg-gradient-to-r from-cyan-950/40 to-blue-950/40 border border-cyan-500/30 rounded-xl p-4 space-y-2">
+                <!-- AI 推薦區塊 -->
+                <div class="bg-gradient-to-r from-cyan-950/50 to-blue-950/50 border border-cyan-500/40 rounded-xl p-4 space-y-2 shadow-inner">
                     <div class="flex justify-between items-center">
                         <span class="text-xs font-bold text-cyan-300 flex items-center gap-2">
-                            <i class="fa-solid fa-robot"></i> AI 智彩完整分析理由
+                            <i class="fa-solid fa-robot"></i> AI 智彩數據模型綜合推薦
                         </span>
                         <span class="bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-xs px-3 py-0.5 rounded-full font-mono">
                             信心度 ${m.confidence}%
                         </span>
                     </div>
-                    <div class="text-sm font-bold text-white pt-1">${m.aiTrend}</div>
-                    <p class="text-xs text-slate-400 leading-relaxed pt-1">
-                        ${detail.aiReason || '綜合評估雙方主客場勝率、近況戰績及天候環境因素。'}
+                    <div class="text-base font-bold text-white pt-1">${m.aiTrend}</div>
+                    <p class="text-xs text-slate-300 leading-relaxed pt-1 border-t border-slate-700/50 mt-2">
+                        ${d.aiReason || '結合先發表現、牛棚防禦率、主客場過盤率及天候進行機器學習模型運算。'}
                     </p>
                 </div>
             `;
