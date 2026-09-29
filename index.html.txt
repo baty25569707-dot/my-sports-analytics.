@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportX 智彩數據分析站</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#0F172A',
+                            card: '#1E293B',
+                            accent: '#334155',
+                            border: '#475569'
+                        },
+                        brand: {
+                            primary: '#3B82F6',
+                            success: '#10B981',
+                            warning: '#F59E0B',
+                            danger: '#EF4444'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0F172A; color: #F8FAFC; font-family: system-ui, -apple-system, sans-serif; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        .tab-btn.active { background-color: #3B82F6; color: white; border-color: #3B82F6; }
+    </style>
+</head>
+<body class="min-h-screen pb-12">
+
+    <!-- 頂部導覽列 -->
+    <nav class="bg-slate-900 border-b border-slate-800 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-chart-line text-blue-500 text-2xl"></i>
+                    <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">SportX 智彩分析</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span id="update-time" class="text-xs text-slate-400 hidden sm:inline"><i class="fa-regular fa-clock mr-1"></i>自動每日更新：每日 20:00</span>
+                    <button onclick="toggleCalculator()" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-calculator"></i> 運彩試算
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+
+        <!-- 聯賽分類選單 -->
+        <div class="flex overflow-x-auto gap-2 pb-4 mb-6 scrollbar-none border-b border-slate-800" id="league-tabs">
+            <button onclick="switchLeague('ALL')" class="tab-btn active px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap border border-slate-700 transition">🔥 熱門賽事</button>
+            <button onclick="switchLeague('MLB')" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap border border-slate-700 text-slate-300 hover:border-slate-500 transition">⚾ MLB 棒球</button>
+            <button onclick="switchLeague('CPBL')" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap border border-slate-700 text-slate-300 hover:border-slate-500 transition">⚾ CPBL 中職</button>
+            <button onclick="switchLeague('KBO')" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap border border-slate-700 text-slate-300 hover:border-slate-500 transition">⚾ KBO 韓職</button>
+            <button onclick="switchLeague('NBA')" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap border border-slate-700 text-slate-300 hover:border-slate-500 transition">🏀 NBA 籃球</button>
+            <button onclick="switchLeague('TPBL')" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap border border-slate-700 text-slate-300 hover:border-slate-500 transition">🏀 TPBL / PLG</button>
+            <button onclick="switchLeague('SOCCER')" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap border border-slate-700 text-slate-300 hover:border-slate-500 transition">⚽ 歐冠/五大聯賽</button>
+        </div>
+
+        <!-- 統計數據卡片 -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="glass-card p-4 rounded-2xl">
+                <div class="text-xs text-slate-400 mb-1">今日推薦過盤率</div>
+                <div class="text-2xl font-bold text-emerald-400">76.4%</div>
+                <div class="text-xs text-emerald-500 mt-1"><i class="fa-solid fa-arrow-trend-up"></i> 近 10 場過 7</div>
+            </div>
+            <div class="glass-card p-4 rounded-2xl">
+                <div class="text-xs text-slate-400 mb-1">AI 智彩信心指標</div>
+                <div class="text-2xl font-bold text-blue-400">88 分</div>
+                <div class="text-xs text-slate-400 mt-1">基於 H2H + 選手近況</div>
+            </div>
+            <div class="glass-card p-4 rounded-2xl">
+                <div class="text-xs text-slate-400 mb-1">今日賽事總數</div>
+                <div class="text-2xl font-bold text-slate-100" id="match-count">8 場</div>
+                <div class="text-xs text-slate-400 mt-1">含棒籃足完整數據</div>
+            </div>
+            <div class="glass-card p-4 rounded-2xl">
+                <div class="text-xs text-slate-400 mb-1">熱門串關組合</div>
+                <div class="text-2xl font-bold text-amber-400">3 串 1</div>
+                <div class="text-xs text-amber-500 mt-1">預估總賠率 3.85</div>
+            </div>
+        </div>
+
+        <!-- 賽事列表 -->
+        <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-fire text-amber-500"></i> <span id="current-category-title">熱門賽事對決與數據分析</span>
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="matches-container">
+            <!-- 賽事卡片將由 JS 自動渲染 -->
+        </div>
+
+    </main>
+
+    <!-- 賽事詳細 Modal -->
+    <div id="detail-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modal-content">
+                <!-- 彈窗內容動態填入 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 運彩試算器 Drawer/Modal -->
+    <div id="calc-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-md w-full p-6 relative">
+            <button onclick="toggleCalculator()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-blue-400">
+                <i class="fa-solid fa-calculator"></i> 運彩過關串關回報試算
+            </h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">本金金額 (TWD)</label>
+                    <input type="number" id="stake" value="1000" oninput="calculateOdds()" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">關數 1 賠率</label>
+                        <input type="number" step="0.01" id="odds1" value="1.75" oninput="calculateOdds()" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">關數 2 賠率</label>
+                        <input type="number" step="0.01" id="odds2" value="1.80" oninput="calculateOdds()" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white">
+                    </div>
+                </div>
+                <div class="p-4 bg-slate-800/80 rounded-xl space-y-2 border border-slate-700/50">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-slate-400">組合總賠率：</span>
+                        <span class="font-bold text-amber-400" id="total-odds">3.15</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-slate-400">預計可獲派彩：</span>
+                        <span class="font-bold text-emerald-400" id="total-payout">$3,150</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-slate-400">預估淨利潤：</span>
+                        <span class="font-bold text-blue-400" id="total-profit">+$2,150</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 邏輯 -->
+    <script>
+        // 範例賽事資料（包含 H2H、球員狀況與盤口分析）
+        const matchesData = [
+            {
+                id: 1,
+                league: 'CPBL',
+                leagueName: '中職',
+                time: '18:35',
+                homeTeam: '中信兄弟',
+                awayTeam: '統一獅',
+                pitchers: '德保拉 VS 古林睿漾',
+                h2h: '近 5 場交手 中信 3 勝 2 敗',
+                playerStatus: '德保拉近 3 場 ERA 1.80；陳傑憲近 5 場打擊率 .412',
+                aiTrend: '主推：中信兄弟讓分 (-1.5) | 大小分：8.5 小',
+                confidence: 85
+            },
+            {
+                id: 2,
+                league: 'MLB',
+                leagueName: 'MLB',
+                time: '07:10',
+                homeTeam: '洛杉磯道奇',
+                awayTeam: '紐約洋基',
+                pitchers: '山本由伸 VS Cole',
+                h2h: '歷史對戰 道奇 6 勝 4 敗佔優',
+                playerStatus: '大谷翔平近 3 場 2 轟；Judge 近 5 場 OPS 1.150',
+                aiTrend: '主推：道奇不讓分主勝 | 大小分：8.5 大',
+                confidence: 90
+            },
+            {
+                id: 3,
+                league: 'KBO',
+                leagueName: '韓職',
+                time: '17:30',
+                homeTeam: 'SSG 登陸者',
+                awayTeam: '三星獅',
+                pitchers: '金廣鉉 VS 原泰仁',
+                h2h: '兩隊得分能力高，近 4 場皆開大分',
+                playerStatus: '三星主砲近 3 場長打率 .750；SSG 牛棚近兩場失 6 分',
+                aiTrend: '主推：全場 10.5 大分',
+                confidence: 82
+            },
+            {
+                id: 4,
+                league: 'NBA',
+                leagueName: 'NBA',
+                time: '10:00',
+                homeTeam: '金州勇士',
+                awayTeam: '洛杉磯湖人',
+                pitchers: 'Curry VS LeBron James',
+                h2h: '近 10 次交手各獲 5 勝，勝負差距都在 6 分內',
+                playerStatus: 'Curry 近期三分命中率 44%；AD 近 3 場平均 14 籃板',
+                aiTrend: '主推：勇士客讓 (+2.5) | 大小分：225.5 大',
+                confidence: 88
+            }
+        ];
+
+        let currentLeague = 'ALL';
+
+        function renderMatches(filter = 'ALL') {
+            const container = document.getElementById('matches-container');
+            container.innerHTML = '';
+
+            const filtered = filter === 'ALL' 
+                ? matchesData 
+                : matchesData.filter(m => m.league === filter);
+
+            document.getElementById('match-count').innerText = `${filtered.length} 場`;
+
+            filtered.forEach(m => {
+                const card = `
+                    <div class="glass-card rounded-2xl p-5 hover:border-blue-500/50 transition cursor-pointer" onclick="openModal(${m.id})">
+                        <div class="flex justify-between items-center mb-3 text-xs text-slate-400">
+                            <span class="px-2 py-0.5 rounded bg-slate-800 font-semibold text-blue-400 border border-slate-700">${m.leagueName}</span>
+                            <span><i class="fa-regular fa-clock mr-1"></i>${m.time}</span>
+                        </div>
+                        <div class="flex justify-between items-center my-3">
+                            <div class="text-lg font-bold text-slate-100">${m.homeTeam}</div>
+                            <div class="text-xs text-amber-400 font-bold px-2 py-1 bg-amber-500/10 rounded">VS</div>
+                            <div class="text-lg font-bold text-slate-100">${m.awayTeam}</div>
+                        </div>
+                        <div class="text-xs text-slate-400 bg-slate-800/50 p-2 rounded-lg mb-3">
+                            <i class="fa-solid fa-user-ninja text-blue-400 mr-1"></i> ${m.pitchers}
+                        </div>
+                        <div class="border-t border-slate-800 pt-3 flex justify-between items-center">
+                            <div class="text-xs text-emerald-400 font-semibold">
+                                <i class="fa-solid fa-robot mr-1"></i> ${m.aiTrend}
+                            </div>
+                            <span class="text-xs font-bold text-blue-400">詳情 <i class="fa-solid fa-angle-right"></i></span>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        function switchLeague(league) {
+            currentLeague = league;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderMatches(league);
+        }
+
+        function openModal(id) {
+            const m = matchesData.find(item => item.id === id);
+            if (!m) return;
+
+            const modalContent = document.getElementById('modal-content');
+            modalContent.innerHTML = `
+                <div class="text-xs text-blue-400 font-bold mb-1">${m.leagueName} · ${m.time}</div>
+                <h2 class="text-xl font-bold mb-4">${m.homeTeam} VS ${m.awayTeam} 深度對決分析</h2>
+                
+                <div class="space-y-4 text-sm">
+                    <div class="bg-slate-800/60 p-3.5 rounded-xl border border-slate-700">
+                        <div class="font-bold text-amber-400 mb-1"><i class="fa-solid fa-history mr-1"></i> 歷史對戰數據 (H2H)</div>
+                        <p class="text-slate-300 text-xs leading-relaxed">${m.h2h}</p>
+                    </div>
+
+                    <div class="bg-slate-800/60 p-3.5 rounded-xl border border-slate-700">
+                        <div class="font-bold text-blue-400 mb-1"><i class="fa-solid fa-chart-line mr-1"></i> 核心球員與先發狀態</div>
+                        <p class="text-slate-300 text-xs leading-relaxed">${m.playerStatus}</p>
+                    </div>
+
+                    <div class="bg-slate-800/60 p-3.5 rounded-xl border border-slate-700">
+                        <div class="font-bold text-emerald-400 mb-1"><i class="fa-solid fa-bullseye mr-1"></i> AI 智彩評估建議</div>
+                        <p class="text-slate-300 text-xs leading-relaxed mb-2">${m.aiTrend}</p>
+                        <div class="w-full bg-slate-700 h-2 rounded-full overflow-hidden">
+                            <div class="bg-emerald-400 h-full rounded-full" style="width: ${m.confidence}%"></div>
+                        </div>
+                        <div class="text-right text-[10px] text-slate-400 mt-1">信心指數：${m.confidence}%</div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
+
+        function toggleCalculator() {
+            document.getElementById('calc-modal').classList.toggle('hidden');
+        }
+
+        function calculateOdds() {
+            const stake = parseFloat(document.getElementById('stake').value) || 0;
+            const o1 = parseFloat(document.getElementById('odds1').value) || 0;
+            const o2 = parseFloat(document.getElementById('odds2').value) || 0;
+
+            const totalOdds = (o1 * o2).toFixed(2);
+            const payout = Math.round(stake * totalOdds);
+            const profit = payout - stake;
+
+            document.getElementById('total-odds').innerText = totalOdds;
+            document.getElementById('total-payout').innerText = `$${payout.toLocaleString()}`;
+            document.getElementById('total-profit').innerText = `${profit >= 0 ? '+' : ''}$${profit.toLocaleString()}`;
+        }
+
+        // 初始化頁面
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMatches('ALL');
+        });
+    </script>
+</body>
+</html>
