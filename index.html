@@ -19,7 +19,7 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
 
-    <!-- Header 頂部導覽列 -->
+    <!-- Header -->
     <header class="glass-header sticky top-0 z-40 py-3.5 px-6">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
             <div class="flex items-center gap-3">
@@ -35,7 +35,6 @@
             </div>
             
             <div class="flex flex-wrap items-center gap-2.5 text-xs">
-                <!-- 本金與單位動態計算器 -->
                 <div class="bg-slate-900/90 border border-sky-500/30 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-inner">
                     <span class="text-slate-400 font-medium"><i class="fa-solid fa-wallet text-amber-400 mr-1"></i>總本金:</span>
                     <span class="text-sky-400 font-bold">NT$</span>
@@ -43,7 +42,6 @@
                     <span class="text-slate-400 text-[10px] hidden sm:inline">(Unit: <span id="unit-val" class="text-amber-400 font-bold">NT$ 300</span>)</span>
                 </div>
 
-                <!-- 5分鐘自動同步計時器 -->
                 <div class="bg-sky-950/40 border border-sky-500/30 text-sky-300 px-3 py-1.5 rounded-xl flex items-center gap-2 font-mono">
                     <span class="relative flex h-2 w-2">
                       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
@@ -58,7 +56,6 @@
     <!-- Main Container -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 space-y-6">
 
-        <!-- 頂部日報專欄特色橫幅 -->
         <div class="glass-card rounded-2xl p-5 md:p-6 border border-sky-500/20 bg-gradient-to-r from-slate-900 via-sky-950/30 to-slate-900 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden">
             <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
             <div class="space-y-1.5 z-10">
@@ -67,27 +64,26 @@
                     <span class="text-slate-400 text-xs font-mono" id="header-update-time">最後同步：--</span>
                 </div>
                 <h2 class="text-lg md:text-xl font-bold text-white tracking-wide">今日全球頂級賽事深度量化解析與 EV+ 複盤專欄</h2>
-                <p class="text-xs text-slate-300 max-w-2xl leading-relaxed">結合大氣流體微氣候、xG 期望進球模型及凱利公式資金動態分配，為您精準計算每筆投資的預期獲利與回報率。</p>
+                <p class="text-xs text-slate-300 max-w-2xl leading-relaxed">主頁即時顯示比賽完賽比分結果與實際下注派彩結果。</p>
             </div>
             <div class="z-10 bg-sky-500/10 border border-sky-500/20 text-sky-300 px-4 py-2.5 rounded-xl text-xs font-mono font-bold flex items-center gap-2 shadow-sm">
                 <i class="fa-solid fa-shield-halved text-emerald-400 text-sm"></i> 風控引擎運作中
             </div>
         </div>
 
-        <!-- 運動分類導覽 Tab -->
         <div class="flex border-b border-slate-800/80 overflow-x-auto gap-2 pb-2 scrollbar-none" id="tab-container"></div>
 
         <!-- 賽事專欄卡片列表 -->
         <div id="matches-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5">
             <div class="col-span-full text-center py-24 text-slate-400">
                 <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3 text-sky-400"></i>
-                <p class="text-xs font-mono">正在調用多維度量化數據矩陣...</p>
+                <p class="text-xs font-mono">正在調用賽事結果矩陣...</p>
             </div>
         </div>
 
     </main>
 
-    <!-- 點擊彈出的高質感專業日報 Modal 視窗 -->
+    <!-- Modal -->
     <div id="detail-modal" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-4">
         <div class="glass-card rounded-3xl w-full max-w-4xl max-h-[92vh] overflow-y-auto shadow-2xl relative border border-sky-500/30">
             <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white text-lg w-9 h-9 rounded-full bg-slate-900/80 hover:bg-slate-800 border border-slate-700 flex items-center justify-center transition z-10">
@@ -99,7 +95,7 @@
 
     <!-- Footer -->
     <footer class="glass-header text-center py-4 text-xs text-slate-500 font-mono mt-auto">
-        SportX Quant Lab © 2026 | Daily Sports Analytics & EV+ Strategy | 本站數據僅供統計分析參考
+        SportX Quant Lab © 2026 | Daily Sports Analytics & EV+ Strategy
     </footer>
 
     <script>
@@ -114,11 +110,7 @@
             if (!isNaN(val) && val > 0) {
                 userBankroll = val;
                 document.getElementById('unit-val').innerText = `NT$ ${Math.round(userBankroll * 0.03)}`;
-                // 如果彈窗開著，即時更新彈窗內的金額
-                const modal = document.getElementById('detail-modal');
-                if (!modal.classList.contains('hidden') && window.currentModalData) {
-                    renderModalContent(window.currentModalData.catKey, window.currentModalData.matchIndex);
-                }
+                renderMatches(currentCategory);
             }
         }
 
@@ -139,7 +131,7 @@
                 document.getElementById('matches-grid').innerHTML = `
                     <div class="col-span-full text-center py-20 text-red-400">
                         <i class="fa-solid fa-triangle-exclamation text-3xl mb-2"></i>
-                        <p class="text-xs font-mono">資料讀取失敗，請確認 GitHub Actions 執行狀態。</p>
+                        <p class="text-xs font-mono">資料讀取失敗。</p>
                     </div>`;
             }
         }
@@ -190,16 +182,33 @@
             const category = sportsData.categories[catKey];
 
             if (!category || !category.matches || category.matches.length === 0) {
-                matchesGrid.innerHTML = `<div class="col-span-full text-center py-16 text-slate-400 text-xs font-mono">今日暫無此分類專欄賽事</div>`;
+                matchesGrid.innerHTML = `<div class="col-span-full text-center py-16 text-slate-400 text-xs font-mono">今日暫無賽事</div>`;
                 return;
             }
 
-            matchesGrid.innerHTML = category.matches.map((m, idx) => `
+            matchesGrid.innerHTML = category.matches.map((m, idx) => {
+                const betRes = m.betResult || { selection: m.aiTrend, outcome: 'PENDING', profit: '計算中...' };
+                
+                // 根據輸贏結果給予不同的顏色樣式
+                let badgeColor = 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+                let outcomeText = '進行中';
+                if (betRes.outcome === 'WIN') {
+                    badgeColor = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+                    outcomeText = '✅ 命中贏球 (WIN)';
+                } else if (betRes.outcome === 'LOSE') {
+                    badgeColor = 'bg-rose-500/20 text-rose-300 border-rose-500/40';
+                    outcomeText = '❌ 未過盤 (LOSE)';
+                } else {
+                    badgeColor = 'bg-sky-500/10 text-sky-300 border-sky-500/30';
+                    outcomeText = '⏳ 賽事進行中';
+                }
+
+                return `
                 <div onclick="openModal('${catKey}', ${idx})" class="glass-card rounded-2xl p-5 cursor-pointer relative flex flex-col justify-between group">
                     <div>
                         <div class="flex justify-between items-center mb-3">
                             <span class="bg-sky-500/10 text-sky-400 text-[11px] px-2.5 py-1 rounded-md font-mono font-bold tracking-wide border border-sky-500/20">${m.league}</span>
-                            <span class="text-xs text-slate-400 font-mono"><i class="fa-regular fa-clock mr-1"></i>${m.time} 開賽</span>
+                            <span class="text-xs text-slate-400 font-mono"><i class="fa-regular fa-clock mr-1"></i>${m.time} | ${m.matchStatus || '已完賽'}</span>
                         </div>
 
                         <div class="grid grid-cols-7 items-center my-3 text-center">
@@ -214,152 +223,77 @@
                             </div>
                         </div>
 
+                        <!-- 實際比分與賽事結果橫幅 -->
+                        <div class="bg-slate-950/90 border border-slate-800 rounded-xl p-3 text-xs flex justify-between items-center font-mono my-3 shadow-inner">
+                            <div>
+                                <span class="text-slate-400 text-[10px] block">官方最終比分結果</span>
+                                <span class="font-bold text-white text-sm">${m.finalScore || '結算中'}</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-slate-400 text-[10px] block">下注派彩結算</span>
+                                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold border ${badgeColor}">${betRes.profit}</span>
+                            </div>
+                        </div>
+
                         <div class="bg-slate-950/70 rounded-xl p-3 text-xs space-y-1.5 border border-slate-800/80 my-3">
-                            <div class="text-slate-300"><i class="fa-solid fa-microchip text-rose-400 mr-2"></i>${m.info}</div>
-                            <div class="text-slate-400"><i class="fa-solid fa-chart-line text-emerald-400 mr-2"></i>${m.h2h}</div>
+                            <div class="text-slate-300"><i class="fa-solid fa-bullseye text-rose-400 mr-2"></i>主推選項：${betRes.selection}</div>
                         </div>
                     </div>
 
                     <div class="flex items-center justify-between pt-3 border-t border-slate-800 text-xs">
                         <div class="text-sky-300 font-semibold flex items-center gap-1.5 font-mono">
-                            <i class="fa-solid fa-chess text-amber-400"></i>
-                            ${m.aiTrend}
+                            <i class="fa-solid fa-square-poll-vertical text-amber-400"></i>
+                            狀態：${outcomeText}
                         </div>
                         <div class="bg-sky-500/10 text-sky-300 border border-sky-500/30 px-2.5 py-1 rounded-full font-mono text-[11px]">
                             信心度 ${m.confidence}%
                         </div>
                     </div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
 
         function openModal(catKey, matchIndex) {
             window.currentModalData = { catKey, matchIndex };
-            renderModalContent(catKey, matchIndex);
-            document.getElementById('detail-modal').classList.remove('hidden');
-        }
-
-        function renderModalContent(catKey, matchIndex) {
             const m = sportsData.categories[catKey].matches[matchIndex];
             const d = m.detail || {};
-            const unitVal = Math.round(userBankroll * 0.03); // 1 Unit = 3% 本金
+            const unitVal = Math.round(userBankroll * 0.03);
 
             const modalBody = document.getElementById('modal-body');
             modalBody.innerHTML = `
-                <!-- 彈窗頂部標頭 -->
                 <div class="border-b border-slate-800 pb-4">
                     <div class="flex items-center justify-between mb-3">
-                        <span class="bg-sky-500/20 text-sky-300 text-xs px-3 py-1 rounded-md font-mono font-bold border border-sky-500/30">${m.league} 每日專欄報告</span>
-                        <span class="text-xs text-slate-400 font-mono"><i class="fa-regular fa-clock mr-1"></i>${m.time} 開賽</span>
+                        <span class="bg-sky-500/20 text-sky-300 text-xs px-3 py-1 rounded-md font-mono font-bold border border-sky-500/30">${m.league} 結算與複盤報告</span>
+                        <span class="text-xs text-emerald-400 font-mono font-bold"><i class="fa-solid fa-circle-check mr-1"></i>${m.matchStatus}：${m.finalScore}</span>
                     </div>
                     <div class="grid grid-cols-7 items-center text-center py-2">
                         <div class="col-span-3">
-                            <span class="text-[10px] bg-sky-950 text-sky-300 border border-sky-800 px-2 py-0.5 rounded font-mono">主場數據矩陣</span>
-                            <h2 class="text-xl font-bold text-slate-100 mt-1">${m.homeTeam}</h2>
-                            <div class="text-xs text-slate-400 mt-1 font-mono">${d.homeRecord || 'xG Efficiency: 1.84'}</div>
+                            <h2 class="text-xl font-bold text-slate-100">${m.homeTeam}</h2>
                         </div>
                         <div class="col-span-1 font-bold text-xl text-sky-400">VS</div>
                         <div class="col-span-3">
-                            <span class="text-[10px] bg-slate-900 text-slate-400 border border-slate-700 px-2 py-0.5 rounded font-mono">客場數據矩陣</span>
-                            <h2 class="text-xl font-bold text-slate-100 mt-1">${m.awayTeam}</h2>
-                            <div class="text-xs text-slate-400 mt-1 font-mono">${d.awayRecord || 'xGA Efficiency: 1.12'}</div>
+                            <h2 class="text-xl font-bold text-slate-100">${m.awayTeam}</h2>
                         </div>
                     </div>
                 </div>
 
-                <!-- 完整主客場球場與即時天氣 -->
-                <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-sky-500/10 flex items-center justify-center text-sky-400 text-lg border border-sky-500/20">
-                            <i class="fa-solid ${d.weatherIcon || 'fa-cloud-sun'}"></i>
-                        </div>
-                        <div>
-                            <div class="text-slate-400 font-mono uppercase text-[10px]">比賽場地與氣候微環境</div>
-                            <div class="font-semibold text-slate-200 mt-0.5">${d.venue || '官方指定球場'} | ${d.weather || '氣候穩定'}</div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-lg border border-emerald-500/20">
-                            <i class="fa-solid fa-wind"></i>
-                        </div>
-                        <div>
-                            <div class="text-slate-400 font-mono uppercase text-[10px]">即時溫度與風向向量場</div>
-                            <div class="font-semibold text-slate-200 mt-0.5">${d.temp || '20°C'} | ${d.wind || '向量風速 5 km/h'}</div>
-                        </div>
-                    </div>
+                <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 text-xs space-y-2">
+                    <div class="text-sky-300 font-bold font-mono">🏟️ 比賽場地與氣候：</div>
+                    <div class="text-slate-200">${d.venue} | ${d.weather} (${d.temp})</div>
                 </div>
 
-                <!-- 專家日報極度專業量化分析報告 -->
                 <div class="space-y-3">
-                    <h3 class="text-xs font-bold text-sky-300 flex items-center gap-2 uppercase tracking-wider font-mono">
-                        <i class="fa-solid fa-square-binary text-amber-400 text-sm"></i> 專家日報：多維度微觀矩陣分析
+                    <h3 class="text-xs font-bold text-sky-300 flex items-center gap-2 font-mono">
+                        <i class="fa-solid fa-square-binary text-amber-400"></i> 賽後量化復盤分析
                     </h3>
-                    <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 text-xs space-y-3 leading-relaxed text-slate-200">
-                        <p><strong class="text-sky-300 font-mono">⚡ 期望進球值 (xG) 與戰術熱區：</strong> ${d.tacticalAnalysis || '雙方在中場三區的控球率呈現非線性對稱，高位壓迫效率差（PPDA）顯示客隊防守轉換期存在漏洞。'}</p>
-                        <p><strong class="text-sky-300 font-mono">📊 市場流動性動能 (Sharp Money)：</strong> ${d.oddsMovement || '亞洲指數初盤開出後，職業資金在早盤迅速回補大分，導致市場隱含機率出現顯著偏離。'}</p>
-                        <p><strong class="text-sky-300 font-mono">🧬 傷停架構與邊際效用：</strong> ${d.injuries || '核心戰術中樞缺陣導致球隊傳球成功率預期下降，威脅球權面臨邊際遞減。'}</p>
+                    <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 text-xs space-y-2 leading-relaxed text-slate-200">
+                        <p>${d.tacticalAnalysis}</p>
+                        <p>${d.oddsMovement}</p>
                     </div>
-                </div>
-
-                <!-- 🌟【新增欄位】：建議配注方式與預期獲利試算表 -->
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-xs font-bold text-sky-300 flex items-center gap-2 uppercase tracking-wider font-mono">
-                            <i class="fa-solid fa-scale-balanced text-emerald-400 text-sm"></i> EV+ 資產配置與預期獲利試算 (總本金 NT$ ${userBankroll.toLocaleString()})
-                        </h3>
-                        <span class="text-[11px] text-slate-400 font-mono">1 Unit = NT$ ${unitVal} (3%)</span>
-                    </div>
-
-                    <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 text-xs overflow-x-auto">
-                        <table class="w-full text-center font-mono">
-                            <thead>
-                                <tr class="text-slate-400 border-b border-slate-800 text-[11px]">
-                                    <th class="pb-3 text-left pl-2">賽局博弈維度</th>
-                                    <th class="pb-3 text-left">高階日報推薦標的</th>
-                                    <th class="pb-3">市場歐賠</th>
-                                    <th class="pb-3">配置單位</th>
-                                    <th class="pb-3">建議下注金額</th>
-                                    <th class="pb-3 text-right pr-2 text-emerald-400">預期淨獲利 (Profit)</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-800/80 text-slate-200">
-                                ${(d.bettingOptions || []).map(opt => {
-                                    const stake = Math.round(opt.units * unitVal);
-                                    const oddsFloat = parseFloat(opt.odds) || 1.85;
-                                    // 預期淨獲利公式 = 下注金額 * (歐賠 - 1)
-                                    const expectedProfit = Math.round(stake * (oddsFloat - 1));
-                                    return `
-                                        <tr class="table-row-hover">
-                                            <td class="py-3 text-left pl-2 font-sans font-bold text-sky-300">${opt.type}</td>
-                                            <td class="py-3 text-left font-sans text-slate-100">${opt.selection}</td>
-                                            <td class="py-3 font-bold text-amber-300">${opt.odds}</td>
-                                            <td class="py-3 text-slate-300">${opt.units} Unit${opt.units > 1 ? 's' : ''}</td>
-                                            <td class="py-3 font-bold text-sky-200">NT$ ${stake.toLocaleString()}</td>
-                                            <td class="py-3 text-right pr-2 font-bold text-emerald-400">+ NT$ ${expectedProfit.toLocaleString()}</td>
-                                        </tr>
-                                    `;
-                                }).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- 貝氏神經網路模型結論 -->
-                <div class="bg-gradient-to-r from-sky-950/60 to-blue-950/60 border border-sky-500/40 rounded-2xl p-5 space-y-2 shadow-inner">
-                    <div class="flex justify-between items-center font-mono">
-                        <span class="text-xs font-bold text-sky-300 flex items-center gap-2">
-                            <i class="fa-solid fa-brain"></i> 貝氏神經網路模型日報結論
-                        </span>
-                        <span class="bg-sky-500/20 text-sky-300 border border-sky-500/40 text-xs px-3 py-0.5 rounded-full font-mono">
-                            置信區間 ${m.confidence}%
-                        </span>
-                    </div>
-                    <div class="text-base font-bold text-white pt-1 font-mono">${m.aiTrend}</div>
-                    <p class="text-xs text-slate-300 leading-relaxed pt-1 border-t border-slate-800/80 mt-2 font-sans">
-                        ${d.aiReason || '基於蒙地卡羅模擬疊代運算，本場次期望值（EV+）顯著，極具長期複利價值。'}
-                    </p>
                 </div>
             `;
+            document.getElementById('detail-modal').classList.remove('hidden');
         }
 
         function closeModal() {
