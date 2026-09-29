@@ -1,5 +1,5 @@
 {
-    "updated_at": "2026-09-29 20:47",
+    "updated_at": "2026-09-29 20:53",
     "categories": {
         "soccer": {
             "name": "足球",
@@ -19,6 +19,13 @@
                     "h2h": "歷史對戰樣本標準差：樣本合意度 3.2 顆",
                     "aiTrend": "日報主推：全場 2.5 大分 (EV+ 運算)",
                     "confidence": 89,
+                    "matchStatus": "已完賽 (Finished)",
+                    "finalScore": "捷克 1 : 3 英格蘭",
+                    "betResult": {
+                        "selection": "全場 2.5 大分 (1.80)",
+                        "outcome": "WIN",
+                        "profit": "+ NT$ 810"
+                    },
                     "detail": {
                         "homeRecord": "主場 xG: 1.92 | 轉換率 18.4%",
                         "awayRecord": "客場 xGA: 0.88 | 壓迫係數 14.2",
@@ -27,9 +34,9 @@
                         "weatherIcon": "fa-cloud-rain",
                         "temp": "16°C",
                         "wind": "側向向量風速 11 km/h",
-                        "tacticalAnalysis": "依據進進攻三區傳遞成功率與垂直推進速度矩陣，客隊在防守轉換期的 PPDA 高達 12.8，顯示其在肋部空間存在結構性防守熵增；主隊透過高位逼搶產生的球權回收率達 31%。",
-                        "oddsMovement": "亞洲指數初盤呈現深盤降水格局，Sharp Money（職業資金）在早盤持續注入大分，造成隱含機率與實際勝率出現 4.6% 的正向期望值偏離。",
-                        "injuries": "主隊後防中樞核心因累積黃牌循環停賽，導致防線協防速率預期下降 7.5%。",
+                        "tacticalAnalysis": "依據進攻三區傳遞成功率與垂直推進速度矩陣，客隊在防守轉換期的 PPDA 高達 12.8，主客雙方成功打出大分格局。",
+                        "oddsMovement": "亞洲指數初盤呈現深盤降水格局，職業資金在早盤持續注入大分。",
+                        "injuries": "主隊後防中樞核心因累積黃牌停賽，防線協防速率下降。",
                         "bettingOptions": [
                             {
                                 "type": "讓分/亞洲盤",
@@ -48,15 +55,9 @@
                                 "selection": "全場角球 9.5 大",
                                 "odds": "1.85",
                                 "units": 0.5
-                            },
-                            {
-                                "type": "高收益複合串關",
-                                "selection": "2.5大 + 巴西獨贏 (2-Fold)",
-                                "odds": "2.61",
-                                "units": 0.5
                             }
                         ],
-                        "aiReason": "結合卜瓦松分佈與蒙地卡羅 10,000 次疊代模擬，本場比賽總進球數落於 3.2 顆之貝氏機率高達 74%，屬於典型的高 EV+ 專欄推薦標的。"
+                        "aiReason": "結合卜瓦松分佈與蒙地卡羅模擬，本場總進球數順利突破 2.5 球。"
                     }
                 }
             ]
@@ -78,6 +79,13 @@
                     "h2h": "進攻權重指數 WAR 差異顯著",
                     "aiTrend": "日報主推：道奇讓分盤 (-1.5)",
                     "confidence": 87,
+                    "matchStatus": "已完賽 (Finished)",
+                    "finalScore": "道奇 5 : 2 洋基",
+                    "betResult": {
+                        "selection": "道奇 -1.5 (1.90)",
+                        "outcome": "WIN",
+                        "profit": "+ NT$ 855"
+                    },
                     "detail": {
                         "homeRecord": "wRC+ 124 | 牛棚 WAR +4.2",
                         "awayRecord": "wRC+ 115 | 牛棚 WAR +1.8",
@@ -86,9 +94,9 @@
                         "weatherIcon": "fa-sun",
                         "temp": "23°C",
                         "wind": "外野順風向量 8 km/h",
-                        "tacticalAnalysis": "先發投手之獨立防禦率與期望揮空率呈現極度優勢。主隊打線面對右投手之 wRC+ 高達 128，牛棚疲勞係數優於客隊防禦崩潰臨界點。",
-                        "oddsMovement": "市場流動性在收盤前出現顯著單邊傾斜，機構調整賠率對沖讓分過熱風險。",
-                        "injuries": "客隊牛棚主力中繼投手進入 15 天傷兵名單，後援防禦率邊際效用遞減。",
+                        "tacticalAnalysis": "先發投手之獨立防禦率與期望揮空率呈現極度優勢，道奇順利贏球過盤。",
+                        "oddsMovement": "市場流動性在收盤前出現顯著單邊傾斜。",
+                        "injuries": "客隊牛棚主力中繼投手進入傷兵名單。",
                         "bettingOptions": [
                             {
                                 "type": "讓分盤",
@@ -101,21 +109,9 @@
                                 "selection": "全場 8.5 大分",
                                 "odds": "1.85",
                                 "units": 1.0
-                            },
-                            {
-                                "type": "不讓分獨贏",
-                                "selection": "道奇主勝 (ML)",
-                                "odds": "1.62",
-                                "units": 1.0
-                            },
-                            {
-                                "type": "跨賽事串關",
-                                "selection": "道奇勝 + 勇士勝",
-                                "odds": "2.45",
-                                "units": 0.5
                             }
                         ],
-                        "aiReason": "透過進階 sabermetrics 模型交叉檢視，主隊在先發投球局數與三振保送比具絕對統治力。"
+                        "aiReason": "道奇在先發投球局數與打者三振保送比具絕對統治力。"
                     }
                 }
             ]
@@ -136,6 +132,13 @@
                     "h2h": "Pace 節奏係數：102.5 高速運轉",
                     "aiTrend": "日報主推：勇士讓分盤 (-3.5)",
                     "confidence": 85,
+                    "matchStatus": "賽事進行中 (Live)",
+                    "finalScore": "勇士 108 : 105 湖人 (第四節)",
+                    "betResult": {
+                        "selection": "勇士 -3.5 (1.90)",
+                        "outcome": "PENDING",
+                        "profit": "計算中..."
+                    },
                     "detail": {
                         "homeRecord": "Net Rating +7.4",
                         "awayRecord": "Net Rating +1.2",
@@ -144,30 +147,18 @@
                         "weatherIcon": "fa-building",
                         "temp": "20°C",
                         "wind": "無風",
-                        "tacticalAnalysis": "主隊真實命中率與底角三分投射頻率居聯盟頂尖。客隊核心內線防守悍將受傷勢影響，直接衝擊禁區護框效率與防守籃板率。",
-                        "oddsMovement": "盤口開出後因大眾投注傾向導致讓分盤微幅上調，職業集團依然維持穩定的買進支撐點。",
-                        "injuries": "客隊核心先發大前鋒列為每日觀察名單，出賽機率 50%。",
+                        "tacticalAnalysis": "主隊真實命中率與底角三分投射頻率居聯盟頂尖。",
+                        "oddsMovement": "盤口開出後讓分盤微幅上調。",
+                        "injuries": "客隊核心先發出賽機率 50%。",
                         "bettingOptions": [
                             {
                                 "type": "讓分盤",
                                 "selection": "勇士 -3.5",
                                 "odds": "1.90",
                                 "units": 1.5
-                            },
-                            {
-                                "type": "大小分",
-                                "selection": "全場 224.5 大分",
-                                "odds": "1.88",
-                                "units": 1.0
-                            },
-                            {
-                                "type": "高效串關",
-                                "selection": "勇士 -3.5 + 歐冠大分",
-                                "odds": "3.20",
-                                "units": 0.5
                             }
                         ],
-                        "aiReason": "基於回合佔有率與空間拉開效率，主隊外線火力預期將撕裂客隊防守。"
+                        "aiReason": "主隊外線火力持續壓制。"
                     }
                 }
             ]
@@ -187,6 +178,13 @@
                     "h2h": "硬地賽事 Elo 積分差 < 15 分",
                     "aiTrend": "日報主推：總局數 39.5 大局",
                     "confidence": 86,
+                    "matchStatus": "未開賽 (Upcoming)",
+                    "finalScore": "尚未開賽",
+                    "betResult": {
+                        "selection": "總局數 39.5 大局 (1.85)",
+                        "outcome": "WAITING",
+                        "profit": "待結算"
+                    },
                     "detail": {
                         "homeRecord": "硬地 Elo: 2145",
                         "awayRecord": "硬地 Elo: 2150",
@@ -195,24 +193,18 @@
                         "weatherIcon": "fa-sun",
                         "temp": "25°C",
                         "wind": "微風 6 km/h",
-                        "tacticalAnalysis": "雙方在底線相持回球拍數勝率對等。發球局保發率皆高於 88%，破發點拯救率在關鍵分展現極高抗壓矩陣。",
-                        "oddsMovement": "勝負獨贏盤呈現完美的 1.90 均勢盤口，市場定價效率極高。",
-                        "injuries": "雙方近期無疲勞累積與肌肉拉傷報告。",
+                        "tacticalAnalysis": "雙方在底線相持回球拍數勝率對等。",
+                        "oddsMovement": "獨贏盤呈現完美的 1.90 均勢盤口。",
+                        "injuries": "雙方近期無疲勞累積報告。",
                         "bettingOptions": [
                             {
                                 "type": "總局數大小盤",
                                 "selection": "總局數 39.5 大局",
                                 "odds": "1.85",
                                 "units": 1.5
-                            },
-                            {
-                                "type": "局數讓分盤",
-                                "selection": "Alcaraz -1.5 局",
-                                "odds": "1.90",
-                                "units": 1.0
                             }
                         ],
-                        "aiReason": "根據 Elo 評級系統與近期搶七勝率推導，本場極大機率至少出現一盤搶七，總局數突破 39.5 具有顯著統計學優勢。"
+                        "aiReason": "總局數突破 39.5 具有顯著統計學優勢。"
                     }
                 }
             ]
