@@ -1,323 +1,210 @@
 {
-    "updated_at": "2026-09-30 05:20",
+    "updated_at": "2026-09-29 21:17",
     "categories": {
-        "baseball": {
-            "name": "棒球",
-            "leagues": ["MLB", "CPBL", "NPB"],
+        "soccer": {
+            "name": "足球",
+            "leagues": [
+                "歐冠",
+                "英超",
+                "西甲",
+                "國家隊"
+            ],
             "matches": [
                 {
-                    "league": "2026-09-30 MLB 美國職棒",
-                    "time": "07:05",
-                    "homeTeam": "紐約洋基",
-                    "awayTeam": "波士頓紅襪",
-                    "info": "世仇對決 | 洋基主場強勢火力護航",
-                    "h2h": "洋基近 5 戰取勝 4 場",
-                    "aiTrend": "日報主推：洋基讓分盤 (-1.5)",
-                    "confidence": 88,
+                    "league": "2026-09-30 國家隊焦點專欄",
+                    "time": "20:00",
+                    "homeTeam": "捷克",
+                    "awayTeam": "英格蘭",
+                    "info": "歐國聯核心交鋒 | xG 效率模型對抗",
+                    "h2h": "歷史對戰樣本標準差：樣本合意度 3.2 顆",
+                    "aiTrend": "日報主推：全場 2.5 大分 (EV+ 運算)",
+                    "confidence": 89,
                     "matchStatus": "已完賽 (Finished)",
-                    "finalScore": "波士頓紅襪 3 : 7 紐約洋基",
+                    "finalScore": "捷克 1 : 3 英格蘭",
                     "betResult": {
-                        "selection": "洋基 -1.5 (1.95)",
+                        "selection": "全場 2.5 大分 (1.80)",
                         "outcome": "WIN",
-                        "profit": "+ NT$ 570"
+                        "profit": "+ NT$ 810"
                     },
                     "detail": {
-                        "homeRecord": "Team OPS .812",
-                        "awayRecord": "Team OPS .745",
-                        "venue": "洋基體育場 (Yankee Stadium)",
-                        "weather": "晴朗微風",
+                        "homeRecord": "主場 xG: 1.92 | 轉換率 18.4%",
+                        "awayRecord": "客場 xGA: 0.88 | 壓迫係數 14.2",
+                        "venue": "伊甸園體育場 (Eden Aréna)",
+                        "weather": "微氣候多雲降雨",
+                        "weatherIcon": "fa-cloud-rain",
+                        "temp": "16°C",
+                        "wind": "側向向量風速 11 km/h",
+                        "tacticalAnalysis": "依據進攻三區傳遞成功率與垂直推進速度矩陣，客隊在防守轉換期的 PPDA 高達 12.8，主客雙方成功打出大分格局。",
+                        "oddsMovement": "亞洲指數初盤呈現深盤降水格局，職業資金在早盤持續注入大分。",
+                        "injuries": "主隊後防中樞核心因累積黃牌停賽，防線協防速率下降。",
+                        "bettingOptions": [
+                            {
+                                "type": "讓分/亞洲盤",
+                                "selection": "英格蘭 -1.0 帕",
+                                "odds": "1.85",
+                                "units": 1.5
+                            },
+                            {
+                                "type": "大小分/總分盤",
+                                "selection": "全場 2.5 大分",
+                                "odds": "1.80",
+                                "units": 1.5
+                            },
+                            {
+                                "type": "角球衍生盤",
+                                "selection": "全場角球 9.5 大",
+                                "odds": "1.85",
+                                "units": 0.5
+                            }
+                        ],
+                        "aiReason": "結合卜瓦松分佈與蒙地卡羅模擬，本場總進球數順利突破 2.5 球。"
+                    }
+                }
+            ]
+        },
+        "baseball": {
+            "name": "棒球",
+            "leagues": [
+                "MLB",
+                "CPBL",
+                "NPB"
+            ],
+            "matches": [
+                {
+                    "league": "2026-09-30 MLB 專欄",
+                    "time": "07:10",
+                    "homeTeam": "洛杉磯道奇",
+                    "awayTeam": "紐約洋基",
+                    "info": "山本由伸 (FIP 2.40) VS Gerrit Cole (FIP 3.05)",
+                    "h2h": "進攻權重指數 WAR 差異顯著",
+                    "aiTrend": "日報主推：道奇讓分盤 (-1.5)",
+                    "confidence": 87,
+                    "matchStatus": "已完賽 (Finished)",
+                    "finalScore": "道奇 5 : 2 洋基",
+                    "betResult": {
+                        "selection": "道奇 -1.5 (1.90)",
+                        "outcome": "WIN",
+                        "profit": "+ NT$ 855"
+                    },
+                    "detail": {
+                        "homeRecord": "wRC+ 124 | 牛棚 WAR +4.2",
+                        "awayRecord": "wRC+ 115 | 牛棚 WAR +1.8",
+                        "venue": "道奇體育場 (Dodger Stadium)",
+                        "weather": "大氣壓力穩定 / 晴朗",
                         "weatherIcon": "fa-sun",
-                        "temp": "22°C",
-                        "wind": "外野順風 8 mph",
-                        "tacticalAnalysis": "洋基主砲近期擊球初速（Exit Velocity）維持在 92.5 mph 以上，對左投壓制力極強。",
-                        "oddsMovement": "早盤過後大量資金湧入洋基，盤口從 -1 調整至 -1.5。",
-                        "injuries": "紅襪牛棚主力輪休。",
+                        "temp": "23°C",
+                        "wind": "外野順風向量 8 km/h",
+                        "tacticalAnalysis": "先發投手之獨立防禦率與期望揮空率呈現極度優勢，道奇順利贏球過盤。",
+                        "oddsMovement": "市場流動性在收盤前出現顯著單邊傾斜。",
+                        "injuries": "客隊牛棚主力中繼投手進入傷兵名單。",
                         "bettingOptions": [
-                            {"type": "讓分盤", "selection": "洋基 -1.5", "odds": "1.95", "units": 2.0}
+                            {
+                                "type": "讓分盤",
+                                "selection": "道奇 -1.5",
+                                "odds": "1.90",
+                                "units": 1.5
+                            },
+                            {
+                                "type": "大小分",
+                                "selection": "全場 8.5 大分",
+                                "odds": "1.85",
+                                "units": 1.0
+                            }
                         ],
-                        "aiReason": "主場長打率與牛棚穩定度皆優於客隊，順利打穿盤口。"
-                    }
-                },
-                {
-                    "league": "2026-09-30 CPBL 中華職棒",
-                    "time": "18:35",
-                    "homeTeam": "中信兄弟",
-                    "awayTeam": "統一獅",
-                    "info": "天王山之戰 | 德保拉先發登板",
-                    "h2h": "本季對戰互有勝負",
-                    "aiTrend": "日報主推：全場小分 (7.5)",
-                    "confidence": 84,
-                    "matchStatus": "未開賽",
-                    "finalScore": "即將開始",
-                    "betResult": {
-                        "selection": "小分 7.5 (1.85)",
-                        "outcome": "PENDING",
-                        "profit": "未結算"
-                    },
-                    "detail": {
-                        "homeRecord": "Team ERA 2.85",
-                        "awayRecord": "Team ERA 3.10",
-                        "venue": "臺中洲際棒球場",
-                        "weather": "多雲時晴",
-                        "weatherIcon": "fa-cloud-sun",
-                        "temp": "26°C",
-                        "wind": "無風",
-                        "tacticalAnalysis": "雙方皆派出王牌洋投，對戰打者三振率偏高，預期前五局形成投手戰。",
-                        "oddsMovement": "大小分盤口維持 7.5 盤勢穩定。",
-                        "injuries": "無重大傷兵。",
-                        "bettingOptions": [
-                            {"type": "大小分", "selection": "小分 7.5", "odds": "1.85", "units": 1.5}
-                        ],
-                        "aiReason": "頂級先發壓制力搭配牛棚鐵壁，有利小分開出。"
-                    }
-                },
-                {
-                    "league": "2026-09-30 NPB 日本職棒",
-                    "time": "17:00",
-                    "homeTeam": "阪神虎",
-                    "awayTeam": "讀賣巨人",
-                    "info": "傳統一戰 | 甲子園球場激戰",
-                    "h2h": "阪神主場優勢明顯",
-                    "aiTrend": "日報主推：阪神虎獨贏 (1.75)",
-                    "confidence": 82,
-                    "matchStatus": "未開賽",
-                    "finalScore": "即將開始",
-                    "betResult": {
-                        "selection": "阪神虎獨贏 (1.75)",
-                        "outcome": "PENDING",
-                        "profit": "未結算"
-                    },
-                    "detail": {
-                        "homeRecord": "Home Win Rate .620",
-                        "awayRecord": "Away Win Rate .510",
-                        "venue": "阪神甲子園球場",
-                        "weather": "陰天",
-                        "weatherIcon": "fa-cloud",
-                        "temp": "19°C",
-                        "wind": "微風",
-                        "tacticalAnalysis": "阪神牛棚防禦率聯盟第一，後段局數掌控力極佳。",
-                        "oddsMovement": "主勝水位持續下修。",
-                        "injuries": "無。",
-                        "bettingOptions": [
-                            {"type": "獨贏盤", "selection": "阪神虎獨贏", "odds": "1.75", "units": 1.0}
-                        ],
-                        "aiReason": "甲子園主場加成與牛棚優勢顯著。"
+                        "aiReason": "道奇在先發投球局數與打者三振保送比具絕對統治力。"
                     }
                 }
             ]
         },
         "basketball": {
             "name": "籃球",
-            "leagues": ["NBA", "TPBL", "P. LEAGUE+"],
+            "leagues": [
+                "NBA",
+                "TPBL"
+            ],
             "matches": [
                 {
                     "league": "2026-09-30 NBA 專欄",
-                    "time": "10:00",
+                    "time": "08:30",
                     "homeTeam": "金州勇士",
                     "awayTeam": "洛杉磯湖人",
-                    "info": "西區頂級宿敵交鋒 | 勇士三分外線高效壓制",
-                    "h2h": "近 5 次交手勇士贏下 4 場",
+                    "info": "有效命中率 eFG% 與進攻效率對決",
+                    "h2h": "Pace 節奏係數：102.5 高速運轉",
                     "aiTrend": "日報主推：勇士讓分盤 (-3.5)",
                     "confidence": 85,
-                    "matchStatus": "已完賽 (Finished)",
-                    "finalScore": "金州勇士 112 : 105 洛杉磯湖人",
+                    "matchStatus": "賽事進行中 (Live)",
+                    "finalScore": "勇士 108 : 105 湖人 (第四節)",
                     "betResult": {
                         "selection": "勇士 -3.5 (1.90)",
-                        "outcome": "WIN",
-                        "profit": "+ NT$ 405"
+                        "outcome": "PENDING",
+                        "profit": "計算中..."
                     },
                     "detail": {
                         "homeRecord": "Net Rating +7.4",
                         "awayRecord": "Net Rating +1.2",
                         "venue": "大通中心 (Chase Center)",
                         "weather": "室內恆溫無風微環境",
-                        "weatherIcon": "fa-cloud-sun",
+                        "weatherIcon": "fa-building",
                         "temp": "20°C",
                         "wind": "無風",
-                        "tacticalAnalysis": "主隊真實命中率與底角三分投射頻率居聯盟頂尖，成功在第四節拉開分差。",
-                        "oddsMovement": "盤口開出後讓分盤微幅上調，專業資金高度看好勇士。",
+                        "tacticalAnalysis": "主隊真實命中率與底角三分投射頻率居聯盟頂尖。",
+                        "oddsMovement": "盤口開出後讓分盤微幅上調。",
                         "injuries": "客隊核心先發出賽機率 50%。",
                         "bettingOptions": [
-                            {"type": "讓分盤", "selection": "勇士 -3.5", "odds": "1.90", "units": 1.5}
+                            {
+                                "type": "讓分盤",
+                                "selection": "勇士 -3.5",
+                                "odds": "1.90",
+                                "units": 1.5
+                            }
                         ],
-                        "aiReason": "主隊外線火力持續壓制，順利打穿讓分盤。"
-                    }
-                },
-                {
-                    "league": "2026-09-30 TPBL 官辦熱身賽",
-                    "time": "19:00",
-                    "homeTeam": "新北國王",
-                    "awayTeam": "福爾摩沙夢想家",
-                    "info": "頂尖列強對決 | 禁區雙塔正面碰撞",
-                    "h2h": "上季季後賽死敵再度碰頭",
-                    "aiTrend": "日報主推：夢想家受讓 (+4.5)",
-                    "confidence": 81,
-                    "matchStatus": "未開賽",
-                    "finalScore": "即將開始",
-                    "betResult": {
-                        "selection": "夢想家 +4.5 (1.90)",
-                        "outcome": "PENDING",
-                        "profit": "未結算"
-                    },
-                    "detail": {
-                        "homeRecord": "Offensive Rating 112.4",
-                        "awayRecord": "Defensive Rating 101.2",
-                        "venue": "新北市立新莊體育館",
-                        "weather": "室內場館",
-                        "weatherIcon": "fa-cloud-sun",
-                        "temp": "22°C",
-                        "wind": "無",
-                        "tacticalAnalysis": "夢想家外線射手群近期訓練狀態極佳，客場外線火力不容小覷。",
-                        "oddsMovement": "受讓盤獲得市場資金支援。",
-                        "injuries": "陣容皆完整。",
-                        "bettingOptions": [
-                            {"type": "讓分盤", "selection": "夢想家 +4.5", "odds": "1.90", "units": 1.0}
-                        ],
-                        "aiReason": "客隊外線火力與防守黏著度足夠咬住比分。"
-                    }
-                },
-                {
-                    "league": "2026-09-30 P. LEAGUE+ 熱身賽",
-                    "time": "19:30",
-                    "homeTeam": "桃園璞園領航猿",
-                    "awayTeam": "臺北富邦勇士",
-                    "info": "PLG強權對話 | 快速轉換進攻演練",
-                    "h2h": "領航猿主場對戰優勢",
-                    "aiTrend": "日報主推：全場大分 (184.5)",
-                    "confidence": 83,
-                    "matchStatus": "未開賽",
-                    "finalScore": "即將開始",
-                    "betResult": {
-                        "selection": "大分 184.5 (1.91)",
-                        "outcome": "PENDING",
-                        "profit": "未結算"
-                    },
-                    "detail": {
-                        "homeRecord": "Pace 98.5",
-                        "awayRecord": "Pace 97.2",
-                        "venue": "桃園巨蛋",
-                        "weather": "室內場館",
-                        "weatherIcon": "fa-cloud-sun",
-                        "temp": "22°C",
-                        "wind": "無",
-                        "tacticalAnalysis": "雙方教練團皆強調快速攻防轉換，出手次數預期大增。",
-                        "oddsMovement": "大分盤口微幅上升。",
-                        "injuries": "無。",
-                        "bettingOptions": [
-                            {"type": "大小分", "selection": "大分 184.5", "odds": "1.91", "units": 1.5}
-                        ],
-                        "aiReason": "高節奏的導傳與防守轉換創造大量得分機會。"
-                    }
-                }
-            ]
-        },
-        "soccer": {
-            "name": "足球",
-            "leagues": ["五大聯賽", "歐冠聯賽"],
-            "matches": [
-                {
-                    "league": "2026-09-30 歐冠分組賽",
-                    "time": "03:00",
-                    "homeTeam": "皇家馬德里",
-                    "awayTeam": "曼城",
-                    "info": "歐洲頂級豪門火星撞地球 | 歐冠淘汰賽級別對決",
-                    "h2h": "近 6 次交鋒雙方各勝 2 場平局 2 場",
-                    "aiTrend": "日報主推：曼城不敗 (0.0)",
-                    "confidence": 88,
-                    "matchStatus": "已完賽 (Finished)",
-                    "finalScore": "皇家馬德里 2 : 2 曼城",
-                    "betResult": {
-                        "selection": "曼城 0.0 (1.95)",
-                        "outcome": "WIN",
-                        "profit": "+ NT$ 570"
-                    },
-                    "detail": {
-                        "homeRecord": "xG Efficiency 1.85",
-                        "awayRecord": "xG Efficiency 2.10",
-                        "venue": "聖地牙哥·伯納烏球場",
-                        "weather": "晴朗微風",
-                        "weatherIcon": "fa-sun",
-                        "temp": "18°C",
-                        "wind": "微風 2 m/s",
-                        "tacticalAnalysis": "皇馬防守反擊極具威脅，曼城中場傳控體系在伯納烏展現極佳抗壓性。",
-                        "oddsMovement": "平手盤震盪，後市客隊水位微降。",
-                        "injuries": "皇馬主力後衛缺陣。",
-                        "bettingOptions": [
-                            {"type": "亞洲盤", "selection": "曼城 0.0", "odds": "1.95", "units": 2.0}
-                        ],
-                        "aiReason": "客隊傳控佔優，成功在客場全身而退。"
-                    }
-                },
-                {
-                    "league": "2026-09-30 英超焦點戰",
-                    "time": "21:00",
-                    "homeTeam": "阿兵哥 (兵工廠)",
-                    "awayTeam": "利物浦",
-                    "info": "英超爭冠前哨戰 | 雙紅會與頂級防線對決",
-                    "h2h": "近期交手雙方互有勝負",
-                    "aiTrend": "日報主推：兩隊皆進球 (BTTS Yes)",
-                    "confidence": 86,
-                    "matchStatus": "未開賽",
-                    "finalScore": "即將開始",
-                    "betResult": {
-                        "selection": "兩隊皆進球 (1.72)",
-                        "outcome": "PENDING",
-                        "profit": "未結算"
-                    },
-                    "detail": {
-                        "homeRecord": "Home xG 2.05",
-                        "awayRecord": "Away xG 1.98",
-                        "venue": "酋長球場",
-                        "weather": "小雨微涼",
-                        "weatherIcon": "fa-cloud-rain",
-                        "temp": "14°C",
-                        "wind": "陣風 4 m/s",
-                        "tacticalAnalysis": "兩隊前場進攻火力兇猛，邊路突破效率極高，防線要完全守住難度極大。",
-                        "oddsMovement": "進球數盤口偏向大球。",
-                        "injuries": "雙方攻擊主力皆正常出賽。",
-                        "bettingOptions": [
-                            {"type": "進球彩", "selection": "兩隊皆進球", "odds": "1.72", "units": 1.5}
-                        ],
-                        "aiReason": "頂尖鋒線對決，雙方皆有能力破門。"
+                        "aiReason": "主隊外線火力持續壓制。"
                     }
                 }
             ]
         },
         "tennis": {
             "name": "網球",
-            "leagues": ["ATP / WTA 巡迴賽"],
+            "leagues": [
+                "ATP 大滿貫"
+            ],
             "matches": [
                 {
-                    "league": "2026-09-30 ATP 網球大師賽",
-                    "time": "14:00",
-                    "homeTeam": "辛納 (J. Sinner)",
-                    "awayTeam": "艾卡拉茲 (C. Alcaraz)",
-                    "info": "世界頂尖決賽對決 | 青春風暴硬地交鋒",
-                    "h2h": "交手紀錄互有領先",
-                    "aiTrend": "日報主推：總局數大分 (22.5)",
-                    "confidence": 87,
-                    "matchStatus": "未開賽",
-                    "finalScore": "即將開始",
+                    "league": "2026-09-30 ATP 專欄",
+                    "time": "21:00",
+                    "homeTeam": "Alcaraz C.",
+                    "awayTeam": "Sinner J.",
+                    "info": "接發球得分率與破發點轉化率極致碰撞",
+                    "h2h": "硬地賽事 Elo 積分差 < 15 分",
+                    "aiTrend": "日報主推：總局數 39.5 大局",
+                    "confidence": 86,
+                    "matchStatus": "未開賽 (Upcoming)",
+                    "finalScore": "尚未開賽",
                     "betResult": {
-                        "selection": "總局數大 22.5 (1.90)",
-                        "outcome": "PENDING",
-                        "profit": "未結算"
+                        "selection": "總局數 39.5 大局 (1.85)",
+                        "outcome": "WAITING",
+                        "profit": "待結算"
                     },
                     "detail": {
-                        "homeRecord": "1st Serve Win % 82%",
-                        "awayRecord": "Return Game Win % 32%",
-                        "venue": "國家網球中心中央球場",
-                        "weather": "室內硬地恆溫",
-                        "weatherIcon": "fa-cloud-sun",
-                        "temp": "22°C",
-                        "wind": "無風",
-                        "tacticalAnalysis": "雙方底線相持能力聯盟頂級，發球局保發率極高，極有可能打滿三盤或出現搶七。",
-                        "oddsMovement": "局數盤一路走高。",
-                        "injuries": "無。",
+                        "homeRecord": "硬地 Elo: 2145",
+                        "awayRecord": "硬地 Elo: 2150",
+                        "venue": "中央球場 (Center Court)",
+                        "weather": "室外硬地微氣候晴朗",
+                        "weatherIcon": "fa-sun",
+                        "temp": "25°C",
+                        "wind": "微風 6 km/h",
+                        "tacticalAnalysis": "雙方在底線相持回球拍數勝率對等。",
+                        "oddsMovement": "獨贏盤呈現完美的 1.90 均勢盤口。",
+                        "injuries": "雙方近期無疲勞累積報告。",
                         "bettingOptions": [
-                            {"type": "總局數", "selection": "大 22.5", "odds": "1.90", "units": 1.5}
+                            {
+                                "type": "總局數大小盤",
+                                "selection": "總局數 39.5 大局",
+                                "odds": "1.85",
+                                "units": 1.5
+                            }
                         ],
-                        "aiReason": "實力極為伯仲之間，預期為一場三盤苦戰的大分格局。"
+                        "aiReason": "總局數突破 39.5 具有顯著統計學優勢。"
                     }
                 }
             ]
