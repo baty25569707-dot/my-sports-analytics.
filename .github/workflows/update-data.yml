@@ -4,7 +4,7 @@ on:
   schedule:
     # 每天台灣時間 20:00 (UTC 12:00) 自動執行
     - cron: '0 12 * * *'
-  workflow_dispatch: # 支援手動按鈕觸發測試
+  workflow_dispatch: # 支援手動觸發測試
 
 jobs:
   update-sports-data:
@@ -30,13 +30,11 @@ jobs:
 
           now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
 
-          # 構建多體育分類賽事資料結構
           data = {
               'updated_at': now_str,
               'categories': {
                   'baseball': {
                       'name': '棒球',
-                      'icon': 'fa-baseball',
                       'leagues': ['MLB', 'CPBL', 'NPB', 'KBO'],
                       'matches': [
                           {
@@ -63,7 +61,6 @@ jobs:
                   },
                   'basketball': {
                       'name': '籃球',
-                      'icon': 'fa-basketball',
                       'leagues': ['NBA', 'TPBL', 'PLG'],
                       'matches': [
                           {
@@ -81,7 +78,7 @@ jobs:
                               'time': '19:00',
                               'homeTeam': '新北國王',
                               'awayTeam': '高雄全家海神',
-                              'info': '林書豪傷癒復出第二場',
+                              'info': '林書豪傷癒復出',
                               'h2h': '雙方近 3 次交手均打出大分',
                               'aiTrend': '主推：新北國王主勝',
                               'confidence': 80
@@ -90,7 +87,6 @@ jobs:
                   },
                   'soccer': {
                       'name': '足球',
-                      'icon': 'fa-futbol',
                       'leagues': ['歐冠', '英超', '西甲', '德甲', '意甲', '法甲'],
                       'matches': [
                           {
@@ -98,16 +94,15 @@ jobs:
                               'time': '03:00',
                               'homeTeam': '皇家馬德里',
                               'awayTeam': '曼城',
-                              'info': '歐冠半決賽 首回合',
+                              'info': '歐冠淘汰賽',
                               'h2h': '近 4 次交手各 2 勝平分秋色',
-                              'aiTrend': '主推：雙方均有進球 (BTTS-Yes) | 2.5 大',
+                              'aiTrend': '主推：雙方均有進球 (BTTS) | 2.5 大',
                               'confidence': 90
                           }
                       ]
                   },
                   'tennis': {
                       'name': '網球',
-                      'icon': 'fa-baseball-bat-ball',
                       'leagues': ['ATP 大滿貫', 'WTA 巡迴賽'],
                       'matches': [
                           {
@@ -115,8 +110,8 @@ jobs:
                               'time': '21:00',
                               'homeTeam': 'Alcaraz C.',
                               'awayTeam': 'Sinner J.',
-                              'info': '硬地大滿貫 決賽',
-                              'h2h': '對戰紀錄 Alcaraz 5 勝 4 敗微幅領先',
+                              'info': '硬地賽 決賽',
+                              'h2h': '對戰紀錄 Alcaraz 5 勝 4 敗',
                               'aiTrend': '主推：總局數 39.5 大',
                               'confidence': 86
                           }
