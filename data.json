@@ -1,12 +1,17 @@
+非常抱歉！為了讓您不用去翻 GitHub 的歷史紀錄，我立刻幫您準備了一份最完整、擁有豐富多賽事與多分類（包含籃球、足球、棒球等）的標準 data.json 模板。
+
+請您直接將以下這整段程式碼完整複製，貼到您的 data.json 檔案中並儲存：
+
+JSON
 {
-    "updated_at": "2026-09-30 05:00",
+    "updated_at": "2026-09-30 05:15",
     "categories": {
         "basketball": {
             "name": "籃球",
-            "leagues": ["NBA"],
+            "leagues": ["NBA", "CBA"],
             "matches": [
                 {
-                    "league": "2026-09-30 NBA 專欄",
+                    "league": "2026-09-30 NBA 季前賽",
                     "time": "10:00",
                     "homeTeam": "金州勇士",
                     "awayTeam": "洛杉磯湖人",
@@ -37,13 +42,80 @@
                         ],
                         "aiReason": "主隊外線火力持續壓制。"
                     }
+                },
+                {
+                    "league": "2026-09-30 NBA 熱身賽",
+                    "time": "12:30",
+                    "homeTeam": "波士頓塞爾提克",
+                    "awayTeam": "紐約尼克",
+                    "info": "大西洋區頂尖宿敵對決 | 防守效率正面碰撞",
+                    "h2h": "塞爾提克近 3 場主場全勝",
+                    "aiTrend": "日報主推：全場大分 (218.5)",
+                    "confidence": 82,
+                    "matchStatus": "未開賽",
+                    "finalScore": "即將開始",
+                    "betResult": {
+                        "selection": "大分 218.5 (1.91)",
+                        "outcome": "PENDING",
+                        "profit": "未結算"
+                    },
+                    "detail": {
+                        "homeRecord": "Offrtg 118.2",
+                        "awayRecord": "Defrtg 109.5",
+                        "venue": "TD花園廣場",
+                        "weather": "室內場館",
+                        "weatherIcon": "fa-cloud-sun",
+                        "temp": "21°C",
+                        "wind": "無",
+                        "tacticalAnalysis": "雙方近期進攻節奏加快，外線出手比例提升。",
+                        "oddsMovement": "大小分盤口由 216.5 升至 218.5。",
+                        "injuries": "雙方陣容完整。",
+                        "bettingOptions": [
+                            {"type": "大小分", "selection": "大分 218.5", "odds": "1.91", "units": 1.0}
+                        ],
+                        "aiReason": "雙方快攻轉換率高，預期為高比分對決。"
+                    }
                 }
             ]
         },
         "soccer": {
             "name": "足球",
-            "leagues": ["歐國聯"],
-            "matches": []
+            "leagues": ["歐冠聯賽", "英超"],
+            "matches": [
+                {
+                    "league": "歐冠分組賽第2輪",
+                    "time": "03:00",
+                    "homeTeam": "皇家馬德里",
+                    "awayTeam": "曼城",
+                    "info": "歐洲頂級豪門火星撞地球 | 歐冠淘汰賽級別對決",
+                    "h2h": "近 6 次交鋒雙方各勝 2 場平局 2 場",
+                    "aiTrend": "日報主推：雙平 / 曼城不敗",
+                    "confidence": 88,
+                    "matchStatus": "已完賽",
+                    "finalScore": "皇家馬德里 2 : 2 曼城",
+                    "betResult": {
+                        "selection": "曼城 0.0 (1.95)",
+                        "outcome": "WIN",
+                        "profit": "+0.95 單位"
+                    },
+                    "detail": {
+                        "homeRecord": "主場勝率 85%",
+                        "awayRecord": "客場不敗率 90%",
+                        "venue": "伯納烏球場",
+                        "weather": "晴朗微風",
+                        "weatherIcon": "fa-sun",
+                        "temp": "18°C",
+                        "wind": "微風 2m/s",
+                        "tacticalAnalysis": "皇馬防守反擊極具威脅，曼城中場控制力佔優。",
+                        "oddsMovement": "平手盤震盪，後市客隊水位微降。",
+                        "injuries": "皇馬主力後衛缺陣。",
+                        "bettingOptions": [
+                            {"type": "亞洲盤", "selection": "曼城 0.0", "odds": "1.95", "units": 2.0}
+                        ],
+                        "aiReason": "客隊傳控體系在伯納烏展現極佳抗壓性。"
+                    }
+                }
+            ]
         }
     }
 }
